@@ -1,0 +1,57 @@
+{
+  "version": "3.76.30446.0",
+  "course_id": "6F6bKEjDOH2",
+  "title": "Practical case part 2",
+  "thumbnail": "story_content/thumbnail.jpg",
+  "scenes": [
+    {
+      "title": "Scène sans titre"
+    }
+  ],
+  "slides": [
+    {
+      "id": "6KqsDfOoHoI",
+      "title": "Determine the appropriate earthing method",
+      "scene_index": "1.1"
+    },
+    {
+      "id": "6Cqt7McORNz",
+      "title": "Determine the appropriate earthing method",
+      "scene_index": "1.2"
+    },
+    {
+      "id": "5mnmnMvaBt3",
+      "title": "the elements needed for this installation",
+      "scene_index": "1.3"
+    },
+    {
+      "id": "5j9GTxh6fV6",
+      "title": "the elements needed for this installation",
+      "scene_index": "1.4"
+    },
+    {
+      "id": "5oKKqdUniNL",
+      "title": "Shop",
+      "scene_index": "1.5"
+    },
+    {
+      "id": "6n9HAQ8VObX",
+      "title": "Identify the ideal earth pit localization ",
+      "scene_index": "1.6"
+    },
+    {
+      "id": "6a2nGGXNufT",
+      "title": "Where do you think the earth rod should be placed? ",
+      "scene_index": "1.7"
+    }
+  ],
+  "player": {
+    "name": "unified",
+    "width": 2180,
+    "height": 1198
+  },
+  "stage": {
+    "width": 1920,
+    "height": 1080
+  }
+}
