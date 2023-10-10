@@ -1,0 +1,13 @@
+Ordre du jour :
+    -présentation du reste de l'équipe
+    -réponse aux questions suite à la lecture des documents
+Discussion :
+    -systèmes évolutifs, possibilité de rajouter de nouveaux cours
+    -précisions sur les  clics à relever : uniquement ceux pour changer de page(+temps passer sur chaque page) (rappel sur la nécessité d'enregistrer toutes les réponses de l'apprenant)
+    -distribution aléatoire du quiz : assez grand nombre (300) pour mettre une proba  
+conclusion :
+    -interface permettant d'ajouter des modules et/ou questionnaires (avec connexion pour sécurité)
+    -possibilité de gérer ce qui est accessible aux apprenants
+    -on regarde si c'est facilement possible de découper un fichier scorm
+commentaire :
+    -possibilité de créer les quiz directement depuis la plateforme ?
