@@ -33,6 +33,10 @@ app.get('/ok', (req, res) => {
     res.sendFile(path.join(__dirname,'./scorm_module1/scormcontent/test/index.html'));
 });
 
+app.get('/acceuil', (req, res) => {
+  res.render('pageAcceuil')
+})
+
 app.listen(port, ()=>{
     console.log(port);
 });

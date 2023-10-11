@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#haut {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+#bas {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+#logo-left, #logo-right, #logo-bottom {
+    max-height: 100px;
+    max-width: 100px;
+}
+
+#logo-left {
+    margin-right: auto;
+}
+
+#logo-right {
+    margin-left: auto;
+}
+
+.button {
+    display: block;
+    margin-top: 50px;
+    padding: 10px 20px;
+    background-color: #4caf50;
+}
+
+
+#menu {
+    width: 200px;
+    height: 100vh;
+    background-color: #f0f0f0;
+    padding: 20px;
+    float: left;
+}
+
+#menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#menu ul li {
+    margin-bottom: 10px;
+}
+#menu ul li a {
+    text-decoration: none;
+    color: #2de736;
+}
+
+#menu ul li a:hover {
+    color: #4caf50;
+}
+
+.card {
+    box-sizing: border-box;
+    width: 190px;
+    height: 190px;
+    background: rgba(217, 217, 217, 0.58);
+    border: 1px solid white;
+    box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(6px);
+    border-radius: 17px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    font-weight: bolder;
+    color: black;
+  }
+  
+  .card:hover {
+    border: 1px solid black;
+    transform: scale(1.05);
+  }
+  
+  .card:active {
+    transform: scale(0.95) rotateZ(1.7deg);
+  }
+
+
