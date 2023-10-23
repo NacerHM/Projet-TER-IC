@@ -1,0 +1,10 @@
+Ordre du jour:
+    -integration scorm
+    -decoupage
+Discussion:
+    -question sur la posibilite d'obtenir un format autre que le format scorm, possibilité d'exporter vers le "web"
+    -precision par rapport au decoupage : nous pouvons le faire mais nous ne pourrons pas l'automatise susr la plateforme, donc pour rajouter des module sur l'interface il faudra les avoir predecoupe
+    -question pour la langue: besoin d'une traduction pour la page d'accueil des participant dans chaque langue   
+conclusion:
+    -format : nous sommes charge de regarder les difference et voir si ce format est plus addapte
+    -langue : choix de langue au niveau de la creation d'une session et interface en francais
