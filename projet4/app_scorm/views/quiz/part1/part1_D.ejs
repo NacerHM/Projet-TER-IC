@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expérience scientifique économique </title>
+
+    <style>
+        
+    </style>
+</head>
+<body>
+    <h2>1: Which of following statement about earthing is  not true?</h2>
+        
+    <form id='questionnaire' onsubmit="correction(event)">
+        <label id="A">
+            <input type="radio" name="question1" id="A"> 
+            It is a way for the leakage of current to the ground.
+        </label>
+        <br>
+        <label id="B">
+            <input type="radio" name="question1" id="B"> 
+            It protects the devices from electrical damage.
+        </label>
+        <br>
+        <label id="C">
+            <input type="radio" name="question1" id="C"> 
+            It protects people who are in touch with non- metallic parts of electrical equipment from electric shock.
+        </label>
+        <br>
+        <label id="D">
+            <input type="radio" name="question1" id="D"> 
+            It helps to prevent electric shock and fires.
+        </label>
+        <br>
+        <span id="interaction"></span>
+        <br>
+        <input type="submit" value="Soumettre">
+    </form> 
+
+    <script>
+       let questionnaire = document.getElementById('questionnaire');
+
+       function correction(event){
+        event.preventDefault();
+
+        let bonneReponse = 'C'
+
+        // let reponse = ['A','B','C','D'];
+        let interaction = document.getElementById('interaction')
+        
+
+        // for(index = 0; index <= reponse.length; index++){
+
+            if(questionnaire.C.checked ){
+                interaction.textContent = 'Correct! Earthing aims to protect people from electric shock when they get in touch with the metallic parts of an electrical equipment.'
+                // break;
+            }else if(questionnaire.A.checked){
+                interaction.textContent = 'Incorrect! The statement A is correct, because earthing does discharge the current to the ground. Try again.'
+                questionnaire.A.checked = false;
+                questionnaire.A.disabled = true;
+                document.querySelector('label#A').style.textDecoration = 'line-through';
+                // break;
+            }else if(questionnaire.B.checked){
+                interaction.textContent = 'Incorrect! The statement B is correct, because earthing does protect the devices from electrical damage. Try again!'
+                questionnaire.B.checked = false;
+                questionnaire.B.disabled = true;
+                document.querySelector('label#B').style.textDecoration = 'line-through';
+                // break;
+            }else if(questionnaire.D.checked){
+                interaction.textContent = 'Incorrect! The statement D is correct, because earthing does help to prevent electric shock and fires. Try again!'
+                questionnaire.D.checked = false;
+                questionnaire.D.disabled = true;
+                document.querySelector('label#D').style.textDecoration = 'line-through';
+                // break;
+            }
+        // }
+
+       }
+    </script>
+</body>
