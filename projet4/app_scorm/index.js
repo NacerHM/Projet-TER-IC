@@ -40,17 +40,20 @@ app.get('/index2', (req,res) => {
 }
   res.render('index2',{groupe:groupe,id:id});
 });
-app.get('quiz_part1:groupe', (req,res) =>{
+app.get('/quiz_part1/:groupe', (req,res) =>{
   let groupe = req.params['groupe'];
   if(groupe == 'A'){
-    res.render('quiz/part1/A');
+    res.render('/quiz/part1/A');
   }else if(groupe == 'B'){
-    res.render('quiz/part1/B');
+    res.render('/quiz/part1/B');
   }else if(groupe == 'C'){
-    res.render('quiz/part1/C');
+    res.render('/quiz/part1/C');
   }else if(groupe == 'D'){
-    res.render('quiz/part1/D');
+    res.render('quiz/part1/part1_D');
   }
+});
+app.get('/yes',(req,res) => {
+  res.render('quiz/part1/part1_D');
 });
 app.get('/ok', (req, res) => {
     res.sendFile(path.join(__dirname,'./scorm_module1/scormcontent/test/index.html'));

@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  database:
+    image: postgres:15
+    restart: always
+    environment:
+       POSTGRES_USER: ${POSTGRES_USER}
+       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+       POSTGRES_HOST: localhost
+       POSTGRES_DB: ${POSTGRES_DB}
+       PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - database_data:/var/lib/postgresql
+      - ./init_db:/docker-entrypoint-initdb.d
+  app:
+    image: nacerhm2/app_scorm
+    restart: always
+    ports:
+      - "3874:3874"
+    
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: database
+      POSTGRES_DB: ${POSTGRES_DB}
+    env_file:
+      - .env
+volumes:
+  database_data: {}

@@ -171,8 +171,20 @@
     
     <script type="application/javascript">__loadEntry()</script>
     <script type="application/javascript">
-      let button_continue = document.getElementsByClassName('continue-btn brand--ui')[0]; 
-      button_continue.setAttribute('onclick',`window.href = "/quiz_part1:${localStorage.getItem('groupe')}"`)
+      // let button_continue = document.getElementsByClassName('continue-btn brand--ui')[0]; 
+      // button_continue.setAttribute('onclick',`window.href = "/quiz_part1:${localStorage.getItem('groupe')}"`)
+      // Attacher l'écouteur d'événements à la balise 'body'
+document.getElementById('app').addEventListener('click', function(event) {
+    // Vérifier si l'élément cliqué est un bouton avec la classe 'ma-classe-bouton'
+    console.log(event.target.classList.contains('continue-btn'));
+    console.log(event.target.classList);
+    if (event.target.classList.contains('continue-btn')) {
+        console.log('Bouton avec la classe spécifique cliqué !');
+        window.location = '/quiz_part1/D'
+        // Exécutez ici la logique souhaitée
+    }
+});
+
     </script>
   </body>
 </html>
