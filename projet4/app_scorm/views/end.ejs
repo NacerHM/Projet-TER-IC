@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fin experience</title>
+</head>
+
+<body>
+    BYE !
+</body>
+
+<script>
+
+    function sendData() {
+
+
+        let list_answers = localStorage.getItem('list_answers');
+        let time_part_1 = localStorage.getItem('time_part1');
+        let time_quiz = localStorage.getItem('time_quiz');
+        let id = localStorage.getItem('id')
+
+        let csv = 'id;time_part_1;time_quiz_1;list_answers_quiz_1'
+        csv = + '\n'
+        csv += `${id};${time_part_1};${time_quiz};${list_answers}`
+
+        const data = {
+            "id": id,
+            "time_part_1": time_part_1,
+            "time_quiz_1": time_quiz,
+            "list_answers_quiz1": list_answers
+        }
+
+        fetch('/saveData', {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+    }
+    sendData();
+
+</script>
+
+</html>

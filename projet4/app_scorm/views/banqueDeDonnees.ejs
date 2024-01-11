@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel des données</title>
+</head>
+<body>
+    <h1>Banque de données</h1>
+    <table border="1px">
+        <thead>
+            <th>Id participant</th>
+            <th>Telecharger le csv</th>
+        </thead>
+        <tbody>
+            <% bank.forEach(csvFile => { %>
+            <td><%=csvFile%></td>
+            <td><a href="/downloadCSV/<%= csvFile %>" target="__blank">Télécharger le CSV</a></td>
+              });
+            <!-- <td>Protect the house with earthing</td>
+            <td>15/12/2023</td>
+            <td>11:30</td> -->
+            
+        </tbody>
+    </table>
+
+    <script>
+        const csv = `id,time_part_1;time_quiz_1;list_answers_quiz_1 \n
+                    24452445;7276;5936;D,A,C`
+                     
+                    const blob = new Blob([csv], {type: ' text/csv; charset=utf-8'});
+                    const url = URL.createObjectURL(blob)
+                    let a = document.getElementById('dlCsv')
+                    a.setAttribute("href", url);
+                    a.setAttribute("download", 'exp_1.csv');
+    </script>
+    
+</body>
+</html>

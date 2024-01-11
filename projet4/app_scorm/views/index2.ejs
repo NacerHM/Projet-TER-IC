@@ -168,19 +168,34 @@
   }(window));
 </script>
 
+<script>
+    const date = new Date();
+
+  let random_id = Math.random()*700000 + 50 + '';
+  random_id += `_${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
+  localStorage.setItem('id',random_id)
+  
+</script>
     
-    <script type="application/javascript">__loadEntry()</script>
+    <script type="application/javascript">
+      __loadEntry();
+      const time = new Date().getTime();
+      localStorage.setItem('start_time_part1', time);
+    </script>
     <script type="application/javascript">
       // let button_continue = document.getElementsByClassName('continue-btn brand--ui')[0]; 
       // button_continue.setAttribute('onclick',`window.href = "/quiz_part1:${localStorage.getItem('groupe')}"`)
       // Attacher l'écouteur d'événements à la balise 'body'
 document.getElementById('app').addEventListener('click', function(event) {
-    // Vérifier si l'élément cliqué est un bouton avec la classe 'ma-classe-bouton'
     console.log(event.target.classList.contains('continue-btn'));
     console.log(event.target.classList);
     if (event.target.classList.contains('continue-btn')) {
-        console.log('Bouton avec la classe spécifique cliqué !');
-        window.location = '/quiz_part1/D'
+        // console.log('Bouton avec la classe spécifique cliqué !');
+        const end_time = new Date().getTime();
+        const start_time = Number(localStorage.getItem('start_time_part1'));
+        const time_part1 = end_time - start_time;
+        localStorage.setItem('time_part1', time_part1);
+        window.location = '/quiz_part1/D';
         // Exécutez ici la logique souhaitée
     }
 });
