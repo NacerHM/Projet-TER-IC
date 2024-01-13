@@ -123,6 +123,10 @@ app.get('/downloadCSV/:filename', (req, res) => {
   }
 });
 
+app.get('/intro_ch',(req, res) => {
+  res.render('ch/introduction');
+});
+
 app.get('/listeCSV', (req, res) => {
   const csvFolder = path.join(__dirname, './data'); // Remplacez 'votre-dossier-de-stockage' par le chemin réel
 
