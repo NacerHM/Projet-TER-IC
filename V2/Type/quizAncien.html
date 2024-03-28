@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 1</title>
+
+    <style>
+        
+    </style>
+</head>
+<body>
+
+<script>
+
+</script>
+
+    <h1 id="question"></h1>
+
+    <form id='questionnaire' onsubmit="correction(event)">
+        <span id="q1"></span>
+        <br>
+        <span id="q2"></span>
+        <br>
+        <span id="q3"></span>
+        <br>
+        <span id="q4"></span>
+        <br>
+        <span id="interaction"></span>
+        <br>
+        <input type="submit" value="Soumettre">
+    </form> 
+    <pre><div id="commentaire"></div></pre>
+    <button id="nextButton" type="button" style="display: none;" onclick="next()">-></button>
+
+    <script>
+        //A completer
+        //
+        //
+        let quizContent = {
+                question: "Manakah dari pernyataan tentang pembumian berikut ini yang salah?",
+                A: "Pembumian adalah cara untuk memastikan kebocoran arus ke pembumian.",
+                B: "Pembumian memproteksi perangkat dari kerusakan listrik.",
+                C: "Pembumian memproteksi orang yang menyentuh bagian nonlogam pada peralatan listrik dari kejut listrik.",
+                D: "Pembumian membantu mencegah kejut listrik dan kebakaran.",
+                correct: "Benar!",
+                incorrect: "Salah, jawaban yang benar adalah",
+                essayeEncore: "Salah! Coba lagi!",
+                explicationA: "Salah. Pernyataan benar, karena pembumian tidak melepaskan (discharge) arus ke pembumian.",
+                explicationB: "Salah. Pernyataan benar, karena pembumian tidak memproteksi perangkat dari kerusakan listrik.",
+                explicationC: "Benar! Pembumian bertujuan memproteksi orang dari kejut listrik Ketika menyentuh komponen logam pada bagian peralatan listrik.",
+                explicationD: "Salah. Pernyataan benar, karena pembumian membantu mencegah kejut listrik dan kebakaran.",
+                bonneReponse: ['C', //numero A B C ou D
+                "Pembumian memproteksi orang yang menyentuh bagian nonlogam pada peralatan listrik dari kejut listrik.", //le text de la bonne reponse
+                "Benar! Pembumian bertujuan memproteksi orang dari kejut listrik Ketika menyentuh komponen logam pada bagian peralatan listrik."], //explication quand on coche la bonne reponse, en duplicat avec l'explicationC
+                explicationfin: ["\u000AJawaban yang benar adalah " + //reponse fausse
+                "\u0022 Pembumian memproteksi orang yang menyentuh bagian nonlogam pada peralatan listrik dari kejut listrik. \u0022\u000A", //on cite la reponse juste
+                "Coba lagi!"],
+                prochainCours: "questionnaireConfianceFin.html"
+            };
+        // jusqu ici ;
+        //
+        //
+
+
+        //on affiche la question
+        let questionDiv = document.getElementById('question');
+        questionDiv.innerHTML = quizContent.question;
+
+        //la on randomise les reponses
+        let q1=document.getElementById('q1');
+        let q2=document.getElementById('q2');
+        let q3=document.getElementById('q3');
+        let q4=document.getElementById('q4');
+        let commentaire = document.getElementById('commentaire');
+
+        let r=Math.floor(Math.random() * 4);
+        if(r===1){
+            q1.innerHTML='<label id="A"><input type="radio" name="question1" id="A"/> ' + quizContent.A + '</label>';
+        }
+        else if(r===2){
+            q1.innerHTML='<label id="B"><input type="radio" name="question1" id="B"/> ' + quizContent.B + '</label>';
+        }
+        else if(r===3){
+            q1.innerHTML='<label id="C"><input type="radio" name="question1" id="C"/> ' + quizContent.C + '</label>';
+        }
+        else{
+            q1.innerHTML='<label id="D"><input type="radio" name="question1" id="D"/> ' + quizContent.D + '</label>';
+        }
+        
+        let r2=Math.floor(Math.random() * 4);
+        while(r===r2){
+            r2=Math.floor(Math.random() * 4);
+        }
+        if(r2===1){
+            q2.innerHTML='<label id="A"><input type="radio" name="question1" id="A"/> ' + quizContent.A + '</label>';
+        }
+        else if(r2===2){
+            q2.innerHTML='<label id="B"><input type="radio" name="question1" id="B"/> ' + quizContent.B + '</label>';
+        }
+        else if(r2===3){
+            q2.innerHTML='<label id="C"><input type="radio" name="question1" id="C"/> ' + quizContent.C + '</label>';
+        }
+        else{
+            q2.innerHTML='<label id="D"><input type="radio" name="question1" id="D"/> ' + quizContent.D + '</label>';
+        }
+       
+        let r3=Math.floor(Math.random() * 4);
+        while(r===r3 || r2===r3){
+            r3=Math.floor(Math.random() * 4);
+        }
+        if(r3===1){
+            q3.innerHTML='<label id="A"><input type="radio" name="question1" id="A"/> ' + quizContent.A + '</label>';
+        }
+        else if(r3===2){
+            q3.innerHTML='<label id="B"><input type="radio" name="question1" id="B"/> ' + quizContent.B + '</label>';
+        }
+        else if(r3===3){
+            q3.innerHTML='<label id="C"><input type="radio" name="question1" id="C"/> ' + quizContent.C + '</label>';
+        }
+        else{
+            q3.innerHTML='<label id="D"><input type="radio" name="question1" id="D"/> ' + quizContent.D + '</label>';
+        }
+        let r4=1;  
+        while(r===r4 || r2===r4 || r3===r4){
+            r4++;
+        }
+        if(r4===1){
+            q4.innerHTML='<label id="A"><input type="radio" name="question1" id="A"/> ' + quizContent.A + '</label>';
+        }
+        else if(r4===2){
+            q4.innerHTML='<label id="B"><input type="radio" name="question1" id="B"/> ' + quizContent.B + '</label>';
+        }
+        else if(r4===3){
+            q4.innerHTML='<label id="C"><input type="radio" name="question1" id="C"/> ' + quizContent.C + '</label>';
+        }
+        else{
+            q4.innerHTML='<label id="D"><input type="radio" name="question1" id="D"/> ' + quizContent.D + '</label>';
+        }
+
+
+        
+
+        //pour la correction
+        const time = new Date().getTime();
+        let list_answers = [];
+        let groupe = "C";
+        function correction(event){
+            event.preventDefault();
+            commentaire.innerHTML = 'je passe ici';
+            if(groupe === "A"){
+                commentaire.textContent = 'je passe la';
+                correctionA(event);
+            }else if(groupe === "B"){
+                correctionB(event);
+            }else if(groupe === "C"){
+                commentaire.innerHTML = 'je passe la';
+                correctionC(event);
+            }else {
+                correctionD(event);
+            }
+        }
+
+        function correctionA(event){
+            event.preventDefault();
+            
+            let selectedOption = questionnaire.querySelector('input[name="question1"]:checked');
+            
+            if (selectedOption && selectedOption.id === quizContent.bonneReponse[0]) {
+                commentaire.textContent = quizContent.correct;
+            } else {
+                commentaire.textContent = quizContent.incorrect+' \u0022'+ quizContent.bonneReponse[1]+'\u0022';
+            }
+            list_answers.push(selectedOption.id);
+            document.querySelector('input[type="submit"]').style.display = 'none';
+            document.getElementById('nextButton').style.display = 'block';
+        }
+
+        function correctionB(event){
+            event.preventDefault();
+            commentaire.textContent = 'feur';
+            
+            let selectedOption = questionnaire.querySelector('input[name="question1"]:checked');
+            
+            if (selectedOption && selectedOption.id === quizContent.bonneReponse[0]) {
+                commentaire.textContent = quizContent.correct;
+                list_answers.push(selectedOption.id);
+                document.querySelector('input[type="submit"]').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'block';
+            } else {
+                commentaire.textContent = quizContent.essayeEncore;
+                selectedOption.checked = false;
+                selectedOption.disabled = true;
+                document.querySelector('label#'+selectedOption.id).style.textDecoration = 'line-through';
+            }
+        }
+
+        function correctionC(event){
+            event.preventDefault();
+            
+            let selectedOption = questionnaire.querySelector('input[name="question1"]:checked');
+            if (selectedOption && selectedOption.id === quizContent.bonneReponse[0]) {
+                commentaire.textContent = quizContent.bonneReponse[3];
+            } else {
+                if (selectedOption && selectedOption.id === 'A') {
+                    commentaire.textContent = quizContent.explicationA + quizContent.explicationfin[0];
+                } else if (selectedOption && selectedOption.id === 'B') {
+                    commentaire.textContent = quizContent.explicationB +quizContent.explicationfin[0];
+                } else if (selectedOption && selectedOption.id === 'C') {
+                    commentaire.textContent = quizContent.explicationC +quizContent.explicationfin[0];
+                } else {
+                    commentaire.textContent = quizContent.explicationD  + quizContent.explicationfin[0];
+                }
+            }
+            list_answers.push(selectedOption.id);
+            document.querySelector('input[type="submit"]').style.display = 'none';
+            document.getElementById('nextButton').style.display = 'block';
+        }
+
+        function correctionD(event){
+            event.preventDefault();
+            
+            let selectedOption = questionnaire.querySelector('input[name="question1"]:checked');
+            
+            if (selectedOption && selectedOption.id === quizContent.bonneReponse[0]) {
+                commentaire.textContent = quizContent.bonneReponse[3];
+                list_answers.push(selectedOption.id);
+                document.querySelector('input[type="submit"]').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'block';
+            } else {
+                if (selectedOption && selectedOption.id === 'A') {
+                    commentaire.textContent = quizContent.explicationA+ quizContent.explicationfin[1];
+                } else if (selectedOption && selectedOption.id === 'B') {
+                    commentaire.textContent = quizContent.explicationB + quizContent.explicationfin[1];
+                } else if (selectedOption && selectedOption.id === 'C') {
+                    commentaire.textContent = quizContent.explicationC + quizContent.explicationfin[1];
+                } else {
+                    commentaire.innerText = quizContent.explicationD + quizContent.explicationfin[1];
+                }
+                selectedOption.checked = false;
+                selectedOption.disabled = true;
+                document.querySelector('label#'+selectedOption.id).style.textDecoration = 'line-through';
+                list_answers.push(selectedOption.id);
+            }
+        }
+        function next() {
+            const time2 = new Date().getTime();
+            //enregister les donne ici : temps + reponse
+            
+            window.location.href = prochainCours;
+        }
+
+        //reste a faire 
+        //enregistrer
+        //recuperer le groupe
+
+
+        //a corriger si j'ai du temps a perdre
+        // on peut cocher la case apres avoir eu la bonne sur les tant que
+        
+        
+    </script>
+    
+</body>

@@ -1,0 +1,70 @@
+<!--
+    <script>
+        let question = "question a poser"
+        let A="It is a way for the leakage of current to the ground.";
+        let B="It protects the devices from electrical damage.";
+        let C="It protects people who are in touch with non-metallic parts of electrical equipment from electric shock.";
+        let D="It helps to prevent electric shock and fires.";
+
+        let correct="c'est correct";
+        let incorrect="c'est incorrect";
+        let essayeEncore="essaie encore";
+        let explicationA = 'Incorrect. This statement is correct, because earthing does discharge the current to the ground. ';
+        let explicationB = 'Incorrect. This statement is correct, because earthing does protect the devices from electrical damage. ';
+        let explicationC = 'Correct! Earthing aims to protect people from electric shock when they get in touch with the metallic parts of an electrical equipment.';
+        let explicationD = 'Incorrect. This statement is correct, because earthing does help to prevent electric shock and fires. ';
+        
+        let bonneReponse = ['C',C, explicationC];
+        
+        let explicationfin = ['The right answer is '+bonneReponse[1], 'essaie encore'];
+        
+    </script>
+</html>
+
+
+<html>
+
+
+    <script>
+        let quizContent = {
+                question: "Manakah dari pernyataan tentang pembumian berikut ini yang salah?",
+                A: "Pembumian adalah cara untuk memastikan kebocoran arus ke pembumian.",
+                B: "Pembumian memproteksi perangkat dari kerusakan listrik.",
+                C: "Pembumian memproteksi orang yang menyentuh bagian nonlogam pada peralatan listrik dari kejut listrik.",
+                D: "Pembumian membantu mencegah kejut listrik dan kebakaran.",
+                correct: "Benar!",
+                incorrect: "Salah, jawaban yang benar adalah",
+                essayeEncore: "Salah! Coba lagi!",
+                explicationA: "Salah. Pernyataan benar, karena pembumian tidak melepaskan (discharge) arus ke pembumian.",
+                explicationB: "Salah. Pernyataan benar, karena pembumian tidak memproteksi perangkat dari kerusakan listrik.",
+                explicationC: "Benar! Pembumian bertujuan memproteksi orang dari kejut listrik Ketika menyentuh komponen logam pada bagian peralatan listrik.",
+                explicationD: "Salah. Pernyataan benar, karena pembumian membantu mencegah kejut listrik dan kebakaran.",
+                bonneReponse: ['C', //numero A B C ou D
+                "Pembumian memproteksi orang yang menyentuh bagian nonlogam pada peralatan listrik dari kejut listrik.", //le text de la bonne reponse
+                "Benar! Pembumian bertujuan memproteksi orang dari kejut listrik Ketika menyentuh komponen logam pada bagian peralatan listrik."], //explication quand on coche la bonne reponse, en duplicat avec l'explicationC
+                explicationfin: ["\u000AJawaban yang benar adalah " + //reponse fausse
+                "\u0022 Pembumian memproteksi orang yang menyentuh bagian nonlogam pada peralatan listrik dari kejut listrik. \u0022\u000A", //on cite la reponse juste
+                "Coba lagi!"],
+                prochainCours: "questionnaireConfianceFin.html"
+            };
+    </script>
+</html>
+
+-->
+
+<script>
+    function randomisation(array) {
+        let tableauRandomise = [...array];
+        for (let i = tableauRandomise.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [tableauRandomise[i], tableauRandomise[j]] = [tableauRandomise[j], tableauRandomise[i]];
+        }
+        return tableauRandomise;
+    }
+
+    // Example usage:
+    const originalArray = [l, 2, 3, 4, 5];
+    const tableauRandomise = randomisation(originalArray);
+    console.log(tableauRandomise);
+</script>
+
