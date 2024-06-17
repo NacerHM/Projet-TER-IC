@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="../../style/test.css">
+</head>
+<body>
+
+    <form>
+        <div></div>
+        <br>
+        <button type="submit" onclick="next()">Halaman selanjutnya</button>
+    </form>
+
+
+
+    <script>
+      if (localStorage.getItem("cle") === "Indonesia"){
+          const time = new Date().getTime();
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));
+          navigation.push(nvEl);
+          localStorage.setItem("navigation", JSON.stringify(navigation));
+      } else {
+          window.location.href = "../transition/transition1.html";
+      }
+
+        //A completer
+        
+        let question = [
+            [["imgtest/q1.png",'Di antara 4 komponen pada gambar di bawah ini, manakah yang tidak dibutuhkan untuk rangkaian listrik:'], ['Generator','Lampu','Konduktor','Sakelar'], 'Sakelar', 'p1'],
+            ['Manakah dari pernyataan tentang AC dan DC berikut ini yang tidak benar? ', ['AC dapat disimpan','DC dapat disimpan','AC bersirkulasi ke 2 arah','Arus DC dalam 1 arah'], 'AC dapat disimpan', 'p1'],
+            [['imgtest/q3.png','Gambar di bawah ini menunjukkan rangkaian listrik tiga fasa:'], ['Benar', 'Salah'], 'Salah', 'p1'],
+            [["imgtest/q4.png",'Manakah dari pernyataan tentang rangkaian listrik di bawah ini yang tidak benar?'], ['Ini adalah rangkaian seri','Ini adalah rangkaian paralel','U = U L1 = U L2 = U L3','I = I1 + I2 + I3'], 'Ini adalah rangkaian seri', 'p1'],
+            [["imgtest/q5.png",'Pada rangkaian listrik di bawah ini, berapa intensitas arus yang mengalir melalui bohlam kedua?'], ['3A','5A','8A','11A'], '5A', 'p1'],
+            [["imgtest/q6.png",'Pada rangkaian listrik di bawah ini, berapa voltase bohlam ketiga?'], ['6V','8V','10V','16V'], '8V', 'p1'],
+            [["imgtest/q7.png",'Berapa nilai resistansi ekuivalen pada rangkaian listrik bawah ini?'], ['20 Ω','30 Ω','90 Ω','40 Ω'], '90 Ω', 'p1'],
+            [["imgtest/q7.png",'Berapa nilai resistansi ekuivalen pada rangkaian paralel bawah ini?'], ['10 Ω','20 Ω','30 Ω','110 Ω'], '10 Ω', 'p1'],
+
+            ['Di antara simbol berikut ini, manakah yang merupakan simbol pembumian?', [["imgtest/q9a.png",'a'], ["imgtest/q9b.png",'b'], ["imgtest/q9c.png",'c']], 'b', 'p2'],
+            ['Apa tujuan utama pembumian?', ['Memproteksi pengguna','Memproteksi perangkat','Memproteksi pengguna dan perangkat'], 'Memproteksi pengguna dan perangkat', 'p2'],
+            ['Dengan membumikan (grounding) semua perangkat rumah tangga, kita dapat...', ['... memutus daya listrik','... mengalirkan arus listrik ke pembumian','... mematikan perangkat'], '... mengalirkan arus listrik ke pembumian', 'p2'],
+            ['Berapa kedalaman minimum yang dibutuhkan untuk mengubur lubang pembumian?', ['3 m','1 m','80 cm','60 cm'], '60 cm', 'p2'],
+            ['Manakah dari berikut ini yang bukan merupakan sistem pembumian:', ['TT','TN','TI', 'IT'], 'TI', 'p2'], //deux TI ? bizarre
+            ['Metode pembumian yang paling sering digunakan adalah:', ['Pembumian pipa ','Pembumian strip','Pembumian pelat'], 'Pembumian pipa ', 'p2'], 
+            ['Warna kabel pembumian adalah', ['biru','merah','hijau dengan kuning','biru dengan kuning'], 'hijau dengan kuning', 'p2'],
+            
+        ];
+
+        //jusqu'a ici
+        
+        //randomisation
+        Array.prototype.shuffle = function() {
+            var currentIndex = this.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = this[currentIndex];
+                this[currentIndex] = this[randomIndex];
+                this[randomIndex] = temporaryValue;
+            }
+            return this;
+        };
+
+        question = question.shuffle();
+        for(let i = 0; i < question.length; i++) {
+            question[i][1] = question[i][1].shuffle();
+        }
+
+
+        for (i = 0; i < question.length; i++) {
+            
+            // Sélectionner le formulaire existant
+            let form = document.querySelector('div');
+
+            if(Array.isArray(question[i][0])) {
+                let p = document.createElement('p');
+                p.textContent = question[i][0][1];
+                form.appendChild(p);
+                let img = document.createElement('img');
+                img.id = 'ques';
+                img.src = question[i][0][0];
+                form.appendChild(img);
+                form.appendChild(document.createElement('br'));
+            } else {
+                let p = document.createElement('p');
+                p.textContent = question[i][0];
+                form.appendChild(p);
+            }
+
+            for (let j = 0; j < question[i][1].length; j++) {
+                if(Array.isArray(question[i][1][j])) {
+                    let img = document.createElement('img');
+                    img.id = 'rep';
+                    img.src = question[i][1][j][0];
+                    form.appendChild(img);
+                    let input = document.createElement('input');
+                    input.type = 'radio';
+                    input.id = question[i][1][j][1].toLowerCase();
+                    input.name = 'question'+i;
+                    input.value = question[i][1][j][1];
+
+                    let label = document.createElement('label');
+                    label.htmlFor = question[i][1][j][1].toLowerCase();
+                    label.textContent = question[i][1][j][1];
+
+                    form.appendChild(input);
+                    form.appendChild(label);
+                    form.appendChild(document.createElement('br'));
+                    form.appendChild(document.createElement('br'));
+                    form.appendChild(document.createElement('br'));
+                }
+                else {
+                    let input = document.createElement('input');
+                    input.type = 'radio';
+                    input.id = question[i][1][j].toLowerCase();
+                    input.name = 'question'+i;
+                    input.value = question[i][1][j];
+
+                    let label = document.createElement('label');
+                    label.htmlFor = question[i][1][j].toLowerCase();
+                    label.textContent = question[i][1][j];
+
+                    form.appendChild(input);
+                    form.appendChild(label);
+                    form.appendChild(document.createElement('br'));
+                }
+            }
+            
+        }   
+        
+
+        
+        let score1 = 0;
+        let score2 = 0;
+
+        // Parcourir chaque question
+        function calculateScore() {
+            for (let i = 0; i < question.length; i++) {
+                // Obtenir les boutons radio pour cette question
+                let radios = document.getElementsByName('question' + i);
+                // Parcourir chaque bouton radio
+                for (let j = 0; j < radios.length; j++) {
+                    let radio = radios[j];
+                    // Si ce bouton radio est coché et sa valeur est la bonne réponse
+                    if (radio.checked && radio.value === question[i][2] || radio.checked && radio.value === question[i][2][1]) {
+                        // Augmenter le score
+                        if (question[i][3] === 'p1') {
+                            score1++;
+                        } else if (question[i][3] === 'p2') {
+                            score2++;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        
+
+        //pour la correction
+        //note uniquement
+        
+        function next() {
+            event.preventDefault();
+            let allAnswered = true;
+            localStorage.getItem('answers') ? answers = JSON.parse(localStorage.getItem('answers')) : answers = [];
+            for (let i = 0; i < question.length; i++) {
+                let radios = document.getElementsByName('question' + i);
+                let answered = false;
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        answered = true;
+                        break;
+                    }
+                }
+                if (!answered) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            if (!allAnswered) {
+                alert('Tolong jawab semua pertanyaan');
+            } else {
+                calculateScore();
+                let existe = localStorage.getItem('score1');
+                //enregister les donne ici : temps + reponse
+                if (existe) {
+                    //rien
+                } else {
+                    const time2 = new Date().getTime();
+                    nvEl = {
+                      time: time2,
+                      page: window.location.pathname
+                    };
+                    let navigation = JSON.parse(localStorage.getItem("navigation"));
+                    navigation.push(nvEl);
+                    localStorage.setItem("navigation", JSON.stringify(navigation));
+                    localStorage.setItem('score1', score1);
+                    localStorage.setItem('score2', score2);
+                }
+            window.location.href = "../transition/transition4";
+            }
+        }
+
+        
+        
+    </script>
+    
+</body>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition</title>
+    <link rel="stylesheet" type="text/css" href="../../style/transitionI.css">
+</head>
+<body>
+    <header>
+        <img id="haut" src="../../style/image/haut.png">
+        <img id="bas" src="../../style/image/bas.png">
+    </header>
+</body>
+    <h1>Anda telah menyelesaikan kursus yang berkaitan dengan pentanahan,
+        Apakah Anda puas dengan desain kursus ini?
+        Harap jawab pertanyaan di bawah ini untuk membantu kami merancang kursus masa depan!           
+    </h1>
+    <button onclick="window.location.href = 'newpage.html';">Mulai</button>
+    <script>
+      if (localStorage.getItem("cle") === "Indonesia"){
+         
+      } else {
+          window.location.href = "../transition/transition1.html";
+      }
+    </script>
+</html>

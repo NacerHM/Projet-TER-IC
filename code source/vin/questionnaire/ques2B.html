@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ques</title>
+    <link rel="stylesheet" type="text/css" href="../../style/questionnaire.css">
+</head>
+<body>
+
+    <form>
+        <div class="consigne">
+            Gunakan skala 5 poin untuk mengukur kegunaan dari feedback selama kuis:
+            <br>
+            <br>
+        </div>
+        <table>
+            <thead>
+                <th></th>
+                <th>Tidak setuju sama sekali<br>0</th>
+                <th>Tidak setuju<br>1</th>
+                <th>Netral<br>2</th>
+                <th>Cukup setuju<br>3</th>
+                <th>Sangat setuju<br>4</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <br>
+        <button type="submit" onclick="next()">Halaman selanjutnya</button>
+    </form>
+
+
+
+    <script>
+      if (localStorage.getItem("cle") === "Indonesia"){
+          const time = new Date().getTime();
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));
+          navigation.push(nvEl);
+          localStorage.setItem("navigation", JSON.stringify(navigation));
+      } else {
+          window.location.href = "../transition/transition1.html";
+      }
+
+        //A completer
+            let question = [
+            ['Feedback yang menunjukkan kesalahan saya, efektif mendukung pembelajaran saya.','e1'],
+            ['Feedback yang menunjukkan bahwa jawaban saya benar, efektif dalam mendukung pembelajaran saya.','e2'],
+            ['Saya telah membaca feedback dengan saksama pada poin-poin yang saya jawab dengan salah.','e3'],
+            ['Saya telah membaca feedback dengan saksama pada poin-poin yang saya jawab dengan benar.','e4'],
+            ['Saya telah membaca dengan saksama feedback yang diberikan kepada saya.','e5'],
+            ['Secara keseluruhan, feedback yang diberikan pada kuis sangat berguna.','e6']
+        ];
+        
+        //jusqu'a ici
+        
+        //randomisation
+        Array.prototype.shuffle = function() {
+            var currentIndex = this.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = this[currentIndex];
+                this[currentIndex] = this[randomIndex];
+                this[randomIndex] = temporaryValue;
+            }
+            return this;
+        };
+
+        question = question.shuffle();
+
+        for (i = 0; i < question.length; i++) {
+            let table = document.querySelector('tbody');
+            let tr = document.createElement('tr');
+            let tdQuestion = document.createElement('td');
+            tdQuestion.textContent = question[i][0];
+            tr.appendChild(tdQuestion);
+            for (let j = 0; j < 5; j++) {
+                let tdRadio = document.createElement('td');
+                let input = document.createElement('input');
+                input.type = "radio";
+                input.name = question[i][1];
+                input.id = `${j}`;
+                tdRadio.appendChild(input);
+                tr.appendChild(tdRadio);
+            }
+            table.appendChild(tr);
+        }   
+        
+
+    
+
+        
+
+        //pour la correction
+        //note uniquement
+        
+        function next() {
+            event.preventDefault();
+            let allAnswered = true;
+            localStorage.getItem('answers') ? answers = JSON.parse(localStorage.getItem('answers')) : answers = [];
+            for (let i = 0; i < question.length; i++) {
+                let radios = document.getElementsByName(question[i][1]);
+                let answered = false;
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        answered = true;
+                        answers.push([question[i][1],radio.id]);
+                        break;
+                    }
+                }
+                if (!answered) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            if (!allAnswered) {
+                alert("Tolong jawab semua pertanyaan");
+            } else {
+                localStorage.setItem('answers', JSON.stringify(answers));
+                window.location.href = "ques2F.html";
+            }
+        }
+    </script>
+    
+</body>

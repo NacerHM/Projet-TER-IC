@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ques</title>
+    <link rel="stylesheet" type="text/css" href="../../style/questionnaire.css">
+</head>
+<body>
+
+    <form>
+        <div class="consigne">
+            Gunakan skala di bawah ini untuk menjawab pertanyaan. 
+            <br>
+            Jika menurut Anda deskripsi di bawah ini sangat sesuai dengan keadaan Anda, pilihlah angka 5; 
+            <br>
+            jika Anda merasa deskripsi tidak sesuai dengan diri Anda, pilihlah angka 0. 
+            <br>
+            Jika deskripsi kurang lebih sesuai dengan diri Anda, pilihlah angka di antara 0 dan 5 yang paling sesuai dengan diri Anda.
+            <br>
+            <br>
+        </div>
+        <table>
+            <thead>
+                <th></th>
+                <th>Sama sekali tidak sesuai<br>0</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>Sangat sesuai sekali<br>5</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <br>
+        <button type="submit" onclick="next()">Halaman selanjutnya</button>
+    </form>
+
+
+
+    <script>
+      if (localStorage.getItem("cle") === "Indonesia"){
+          const time = new Date().getTime();
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));
+          navigation.push(nvEl);
+          localStorage.setItem("navigation", JSON.stringify(navigation));
+      } else {
+          window.location.href = "../transition/transition1.html";
+      }
+
+        //A completer
+            let question = [
+            ['Selama kursus kelistrikan ini, saya sering melewatkan poin-poin penting karena saya memikirkan hal lain.','h1'],
+            ['Saat membaca untuk kursus kelistrikan ini, saya membuat pertanyaan untuk membantu memfokuskan bacaan saya.','h2'],
+            ['Ketika saya menjadi bingung tentang sesuatu yang saya baca untuk kursus kelistrikan ini, saya kembali dan mencoba mencari tahu.','h3'],
+            ['Ketika materi kursus kelistrikan ini sulit dipahami, saya mengubah cara saya membaca materi.','h4'],
+            ['Sebelum saya mempelajari materi kursus kelistrikan ini secara menyeluruh, saya membaca sekilas untuk melihat bagaimana materi ini disusun.','h5'],
+            ['Saya bertanya pada diri sendiri untuk memastikan bahwa saya memahami materi yang telah saya pelajari dalam kursus kelistrikan ini.','h6'],
+            ['Saya mencoba mengubah cara saya belajar agar sesuai dengan persyaratan kursus kelistrikan dan gaya pembelajaran e-learning.','h7'],
+            ['Saya menemukan bahwa saya telah membaca kursus kelistrikan ini tetapi tidak tahu apa isinya.','h8'],
+            ['Saya mencoba memikirkan suatu topik dan memutuskan apa yang harus saya pelajari dari topik tersebut daripada hanya membacanya ketika belajar untuk kursus kelistrikan ini.','h9'],
+            ['Saat belajar kursus kelistrikan ini, saya mencoba mencari tahu konsep mana yang kurang saya pahami dengan baik.','h10'],
+            ['Ketika saya belajar kursus kelistrikan ini, saya menetapkan tujuan untuk diri saya sendiri agar dapat mengarahkan aktivitas saya di setiap periode belajar.','h11'],
+            ['Ketika saya bingung pada kursus kelistrikan ini, saya berencana untuk menyelesaikannya setelahnya.','h12']
+        ];
+        
+        //jusqu'a ici
+        
+        //randomisation
+        Array.prototype.shuffle = function() {
+            var currentIndex = this.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = this[currentIndex];
+                this[currentIndex] = this[randomIndex];
+                this[randomIndex] = temporaryValue;
+            }
+            return this;
+        };
+
+        question = question.shuffle();
+
+        for (i = 0; i < question.length; i++) {
+            let table = document.querySelector('tbody');
+            let tr = document.createElement('tr');
+            let tdQuestion = document.createElement('td');
+            tdQuestion.textContent = question[i][0];
+            tr.appendChild(tdQuestion);
+            for (let j = 0; j < 6; j++) {
+                let tdRadio = document.createElement('td');
+                let input = document.createElement('input');
+                input.type = "radio";
+                input.name = question[i][1];
+                input.id = `${j}`;
+                tdRadio.appendChild(input);
+                tr.appendChild(tdRadio);
+            }
+            table.appendChild(tr);
+        }   
+        
+
+    
+
+        
+
+        //pour la correction
+        //note uniquement
+        
+        function next() {
+            event.preventDefault();
+            let allAnswered = true;
+            localStorage.getItem('answers') ? answers = JSON.parse(localStorage.getItem('answers')) : answers = [];
+            for (let i = 0; i < question.length; i++) {
+                let radios = document.getElementsByName(question[i][1]);
+                let answered = false;
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        answered = true;
+                        answers.push([question[i][1],radio.id]);
+                        break;
+                    }
+                }
+                if (!answered) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            if (!allAnswered) {
+                alert("Tolong jawab semua pertanyaan");
+            } else {
+                localStorage.setItem('answers', JSON.stringify(answers));
+                window.location.href = "ques3.html";
+            }
+        }
+    </script>
+    
+</body>

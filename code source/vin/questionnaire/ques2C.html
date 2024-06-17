@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ques</title>
+    <link rel="stylesheet" type="text/css" href="../../style/questionnaire.css">
+</head>
+<body>
+
+    <form>
+        <div class="consigne">
+            Pilihlah jawaban yang paling mendeskripsikan anda melalui pernyataan-pernyataan berikut ini: Skala Likert 5 poin:
+            <br>
+            <br>
+        </div>
+        <table>
+            <thead>
+                <th></th>
+                <th>Sangat tidak tepat<br>1</th>
+                <th>Tidak tepat<br>2</th>
+                <th>Netral<br>3</th>
+                <th>Tepat<br>4</th>
+                <th>Sangat tepat sekali<br>5</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <br>
+        <button type="submit" onclick="next()">Halaman selanjutnya</button>
+    </form>
+
+
+
+    <script>
+      if (localStorage.getItem("cle") === "Indonesia"){
+          const time = new Date().getTime();
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));
+          navigation.push(nvEl);
+          localStorage.setItem("navigation", JSON.stringify(navigation));
+      } else {
+          window.location.href = "../transition/transition1.html";
+      }
+
+        //A completer
+            let question = [
+            ['Dengan mengikuti pembelajaran ini, saya yakin dapat mempelajari materi pembelajaran.','f1'],
+            ['Setelah mengikuti pembelajaran ini untuk sementara waktu, saya yakin bahwa saya mampu lulus tes.','f2'],
+            ['Struktur materi yang baik memberi saya kepercayaan diri pada kapasitas diri saya untuk memahami materi ini.','f3'],
+            ['Kualitas penulisan menarik perhatian saya.','f4'],
+            ['Cara penyajian informasi di halamannya membantu menjaga fokus saya pada pembelajaran.','f5'],
+            ['Variasi bacaan, latihan, ilustrasi, dan sebagainya membuat saya tetap memperhatikan pelajaran.','f6'],
+            ['Saya sangat menikmati pelajaran ini sehingga saya ingin mengetahui lebih banyak mengenai topik ini.','f7'],
+            ['Saya sangat menikmati pelajaran ini.','f8'],
+            ['Saya senang mengerjakan pelajaran yang disusun dengan baik.','f9'],
+            ['Terdapat banyak cerita, gambar, atau contoh yang menunjukkan kepada saya betapa pentingnya materi ini bagi sebagian orang.','f10'],
+            ['Isi konten dan gaya penulisan pelajaran ini memberikan kesan bahwa isinya layak untuk diketahui.','f11'],
+            ['Konten pelajaran ini akan berguna bagi saya di masa mendatang.','f12']
+            
+        ];
+
+        //jusqu'a ici
+        
+        //randomisation
+        Array.prototype.shuffle = function() {
+            var currentIndex = this.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = this[currentIndex];
+                this[currentIndex] = this[randomIndex];
+                this[randomIndex] = temporaryValue;
+            }
+            return this;
+        };
+
+        question = question.shuffle();
+
+        for (i = 0; i < question.length; i++) {
+            let table = document.querySelector('tbody');
+            let tr = document.createElement('tr');
+            let tdQuestion = document.createElement('td');
+            tdQuestion.textContent = question[i][0];
+            tr.appendChild(tdQuestion);
+            for (let j = 0; j < 5; j++) {
+                let tdRadio = document.createElement('td');
+                let input = document.createElement('input');
+                input.type = "radio";
+                input.name = question[i][1];
+                input.id = `${j}`;
+                tdRadio.appendChild(input);
+                tr.appendChild(tdRadio);
+            }
+            table.appendChild(tr);
+        }   
+        
+
+    
+
+        
+
+        //pour la correction
+        //note uniquement
+        
+        function next() {
+            event.preventDefault();
+            let allAnswered = true;
+            localStorage.getItem('answers') ? answers = JSON.parse(localStorage.getItem('answers')) : answers = [];
+            for (let i = 0; i < question.length; i++) {
+                let radios = document.getElementsByName(question[i][1]);
+                let answered = false;
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        answered = true;
+                        answers.push([question[i][1],radio.id]);
+                        break;
+                    }
+                }
+                if (!answered) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            if (!allAnswered) {
+                alert("Tolong jawab semua pertanyaan");
+            } else {
+                localStorage.setItem('answers', JSON.stringify(answers));
+                window.location.href = "ques2D.html";
+            }
+        }
+    </script>
+    
+</body>

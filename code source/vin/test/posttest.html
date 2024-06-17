@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="../../style/test.css">
+</head>
+<body>
+
+    <form>
+        <div></div>
+        <br>
+        <button type="submit" onclick="next()">Halaman selanjutnya</button>
+    </form>
+
+
+
+    <script>
+      if (localStorage.getItem("cle") === "Indonesia"){
+          const time = new Date().getTime();
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));
+          navigation.push(nvEl);
+          localStorage.setItem("navigation", JSON.stringify(navigation));
+      } else {
+          window.location.href = "../transition/transition1.html";
+      }
+
+        //A completer
+        
+        let question = [
+            ['Pembumian memproteksi perangkat dari kerusakan listrik.', ['Benar','Salah'], 'Benar', 'p1'],
+            ['Pembumian memberikan jalur untuk kebocoran arus ke tanah.', ['Benar','Salah'], 'Benar', 'p1'],
+            ['Pembumian memproteksi orang yang menyentuh bagian nonlogam pada peralatan listrik dari sengatan listrik.', ['Benar','Salah'], 'Salah', 'p1'],
+            ['Pembumian strip ', ['adalah metode pembumian yang paling ekonomis.','adalah metode pembumian yang paling tahan terhadap korosi.','adalah metode pembumian yang paling sering digunakan.','memerlukan penggalian area permukaan tanah yang lebih luas untuk pemasangan.'], 'adalah metode pembumian yang paling tahan terhadap korosi.', 'p1'],
+            ['Pembumian pipa ', ['adalah metode pembumian yang paling ekonomis.','adalah metode pembumian yang paling tahan terhadap korosi.','memerlukan penggalian area permukaan tanah yang lebih luas untuk pemasangan.'], 'adalah metode pembumian yang paling ekonomis.', 'p1'],
+            ['Ketika merancang sistem pembumian untuk rumah sakit, kita memilih: ', ['Sistem TN S','Sistem IT','Sistem TN C','Sistem TT'], 'Sistem IT', 'p1'],
+            ['__________ adalah komponen akhir sistem pembumian yang dibenamkan di bawah tanah.', ['Kabel pembumian','Konduktor kontinuitas pembumian','Elektrode pembumian','Sekring'], 'Elektrode pembumian', 'p1'],
+            ['Kabel netral memiliki warna ', ['biru','merah','hijau dengan kuning','biru dengan kuning'], 'biru', 'p1'],
+            ['Untuk memasang lubang pembumian, saya akan memerlukan penutup lubang pembumian', ['untuk memproteksi lubang pembumian dari kerusakan.','untuk menginformasikan lokasi lubang pembumian.','untuk memproteksi instalatur yang memasang lubang pembumian.'], 'untuk memproteksi lubang pembumian dari kerusakan.', 'p1'],
+            ['Multimeter adalah perangkat yang paling cocok untuk mengukur resistansi tanah untuk sistem pembumian.', ['Benar','Salah'], 'Salah', 'p1'],
+            ['Nilai sempurna dari resistansi sistem pembumian adalah: ', ['0 Ω','0,5 Ω','5 Ω','10 Ω'], '0 Ω', 'p1'],
+            
+            ['Jika terjadi kegagalan antara fasa dan pembumian, sistem mana yang dapat terus beroperasi tanpa gangguan?', ['Sistem TN S','Sistem IT','Sistem TN C','Sistem TT'], 'Sistem IT', 'p2'],
+            ['Ketika membangun instalasi listrik di kamar mandi, pengikatan proteksi (bonding) mungkin tidak diperlukan untuk:', ['Instalasi pipa air logam','Instalasi soket','Instalasi pipa gas logam','Instalasi wastafel keramik'], 'Instalasi wastafel keramik', 'p2'],
+            ['Pembumian pipa harus dipasang pada lubang tanah sedalam _____ .', ['3 m','2 m','1 m','80 cm'], '3 m', 'p2'],
+            ['Kita harus mengukur resistansi tanah sebelum membuat instalasi sistem pembumian.', ['Benar','Salah'], 'Benar', 'p2'],
+            ['Kita harus mengukur resistansi tanah setelah membuat instalasi sistem pembumian.', ['Benar','Salah'], 'Benar', 'p2'],
+            ['Di antara beberapa elemen berikut ini, manakah yang tidak cocok untuk instalasi lubang pembumian:', ['Elektrode pembumian','Pasir','Arang','Multimeter'], 'Multimeter', 'p2'],
+            ['ELCB dan RCCB dapat mendeteksi dan mengisolasi kegagalan pembumian dalam rangkaian listrik.', ['Benar','Salah'], 'Benar', 'p2']
+
+        ];
+
+        //jusqu'a ici
+        
+        //randomisation
+        Array.prototype.shuffle = function() {
+            var currentIndex = this.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = this[currentIndex];
+                this[currentIndex] = this[randomIndex];
+                this[randomIndex] = temporaryValue;
+            }
+            return this;
+        };
+
+        question = question.shuffle();
+        for(let i = 0; i < question.length; i++) {
+            question[i][1] = question[i][1].shuffle();
+        }
+
+
+        for (i = 0; i < question.length; i++) {
+            
+            // Sélectionner le formulaire existant
+            let form = document.querySelector('div');
+
+            if(Array.isArray(question[i][0])) {
+                let p = document.createElement('p');
+                p.textContent = question[i][0][1];
+                form.appendChild(p);
+                let img = document.createElement('img');
+                img.id = 'ques';
+                img.src = question[i][0][0];
+                form.appendChild(img);
+            } else {
+                let p = document.createElement('p');
+                p.textContent = question[i][0];
+                form.appendChild(p);
+            }
+
+            for (let j = 0; j < question[i][1].length; j++) {
+                if(Array.isArray(question[i][1][j])) {
+                    let img = document.createElement('img');
+                    img.id = 'rep';
+                    img.src = question[i][1][j][0];
+                    form.appendChild(img);
+                    form.appendChild(document.createElement('br'));
+                    let input = document.createElement('input');
+                    input.type = 'radio';
+                    input.id = question[i][1][j][1].toLowerCase();
+                    input.name = 'question'+i;
+                    input.value = question[i][1][j][1];
+
+                    let label = document.createElement('label');
+                    label.htmlFor = question[i][1][j][1].toLowerCase();
+                    label.textContent = question[i][1][j][1];
+                    form.appendChild(input);
+                    form.appendChild(label);
+                    form.appendChild(document.createElement('br'));
+
+                }
+                else {
+                    let input = document.createElement('input');
+                    input.type = 'radio';
+                    input.id = question[i][1][j].toLowerCase();
+                    input.name = 'question'+i;
+                    input.value = question[i][1][j];
+
+                    let label = document.createElement('label');
+                    label.htmlFor = question[i][1][j].toLowerCase();
+                    label.textContent = question[i][1][j];
+
+                    form.appendChild(input);
+                    form.appendChild(label);
+                    form.appendChild(document.createElement('br'));
+                }
+            }
+            
+        }   
+        
+
+        
+        let score1 = 0;
+        let score2 = 0;
+
+        // Parcourir chaque question
+        function calculateScore() {
+            for (let i = 0; i < question.length; i++) {
+                // Obtenir les boutons radio pour cette question
+                let radios = document.getElementsByName('question' + i);
+                // Parcourir chaque bouton radio
+                for (let j = 0; j < radios.length; j++) {
+                    let radio = radios[j];
+                    // Si ce bouton radio est coché et sa valeur est la bonne réponse
+                    if (radio.checked && radio.value === question[i][2] || radio.checked && radio.value === question[i][2][1]) {
+                        // Augmenter le score
+                        if (question[i][3] === 'p1') {
+                            score1++;
+                        } else if (question[i][3] === 'p2') {
+                            score2++;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        
+
+        //pour la correction
+        //note uniquement
+        
+        function next() {
+            event.preventDefault();
+            let allAnswered = true;
+            localStorage.getItem('answers') ? answers = JSON.parse(localStorage.getItem('answers')) : answers = [];
+            for (let i = 0; i < question.length; i++) {
+                let radios = document.getElementsByName('question' + i);
+                let answered = false;
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        answered = true;
+                        break;
+                    }
+                }
+                if (!answered) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            if (!allAnswered) {
+                alert('Tolong jawab semua pertanyaan');
+            } else {
+                calculateScore();
+                let existe = localStorage.getItem('score3');
+                //enregister les donne ici : temps + reponse
+                if (existe) {
+                    //rien
+                } else {
+                    const time2 = new Date().getTime();
+                    nvEl = {
+                      time: time2,
+                      page: window.location.pathname
+                    };
+                    let navigation = JSON.parse(localStorage.getItem("navigation"));
+                    navigation.push(nvEl);
+                    localStorage.setItem("navigation", JSON.stringify(navigation));
+                    localStorage.setItem('score3', score1);
+                    localStorage.setItem('score4', score2);
+                }
+            window.location.href = "../questionnaire/ques2.html";
+            }
+        }
+
+        
+        
+    </script>
+    
+</body>

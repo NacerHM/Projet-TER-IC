@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ques</title>
+    <link rel="stylesheet" type="text/css" href="../../style/questionnaire.css">
+</head>
+<body>
+
+    <form>
+        <div class="consigne">
+            Pilih nomor untuk menjawab pertanyaan. <br>
+            Jika Anda sangat setuju dengan uraian tersebut, silakan pilih 5 ; <br>
+            jika Anda sangat tidak setuju dengan uraian tersebut, silakan pilih 0 . <br>
+            Jika Anda kurang lebih setuju dengan uraian tersebut, pilihlah angka antara 0 dan 5 yang paling menggambarkan diri Anda.
+            <br><br>
+            Mengenai kursus yang saya pelajari tentang pembumian :
+            <br>
+            <br>
+        </div>
+        <table>
+            <thead>
+                <th></th>
+                <th>Tidak setuju sama sekali<br>0</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>Sangat setuju<br>5</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <br>
+        <button type="submit" onclick="next()">Halaman selanjutnya</button>
+    </form>
+
+
+
+    <script>
+      if (localStorage.getItem("cle") === "Indonesia"){
+          const time = new Date().getTime();
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));
+          navigation.push(nvEl);
+          localStorage.setItem("navigation", JSON.stringify(navigation));
+      } else {
+          window.location.href = "../transition/transition1.html";
+      }
+
+        //A completer
+            let question = [
+            ['Kesalahan penting untuk menjadi lebih baik pada kursus yang berhubungan dengan profesi.','i1'],
+            ['Kesalahan membantu saya meningkatkan keterampilan saya pada kursus yang berhubungan dengan profesi.','i2'],
+            ['Saya dapat mengembangkan keterampilan baru dengan membuat kesalahan pada kursus yang berhubungan dengan profesi.','i3'],
+            ['Kesalahan pada kursus yang berhubungan dengan profesi membantu saya menjadi lebih baik di kemudian hari.','i4'],
+            ['Saya dapat belajar sesuatu dari kesalahan saya pada kursus yang berhubungan dengan profesi.','i5']
+            
+        ];
+
+        //jusqu'a ici
+        
+        //randomisation
+        Array.prototype.shuffle = function() {
+            var currentIndex = this.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = this[currentIndex];
+                this[currentIndex] = this[randomIndex];
+                this[randomIndex] = temporaryValue;
+            }
+            return this;
+        };
+
+        question = question.shuffle();
+
+        for (i = 0; i < question.length; i++) {
+            let table = document.querySelector('tbody');
+            let tr = document.createElement('tr');
+            let tdQuestion = document.createElement('td');
+            tdQuestion.textContent = question[i][0];
+            tr.appendChild(tdQuestion);
+            for (let j = 0; j < 6; j++) {
+                let tdRadio = document.createElement('td');
+                let input = document.createElement('input');
+                input.type = "radio";
+                input.name = question[i][1];
+                input.id = `${j}`;
+                tdRadio.appendChild(input);
+                tr.appendChild(tdRadio);
+            }
+            table.appendChild(tr);
+        }   
+        
+
+    
+
+        
+
+        //pour la correction
+        //note uniquement
+        
+        function next() {
+            event.preventDefault();
+            let allAnswered = true;
+            localStorage.getItem('answers') ? answers = JSON.parse(localStorage.getItem('answers')) : answers = [];
+            for (let i = 0; i < question.length; i++) {
+                let radios = document.getElementsByName(question[i][1]);
+                let answered = false;
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        answered = true;
+                        answers.push([question[i][1],radio.id]);
+                        break;
+                    }
+                }
+                if (!answered) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            if (!allAnswered) {
+                alert("Tolong jawab semua pertanyaan");
+            } else {
+                localStorage.setItem('answers', JSON.stringify(answers));
+                window.location.href = "ques2C.html";
+            }
+        }
+    </script>
+    
+</body>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition</title>
+    <link rel="stylesheet" type="text/css" href="../../style/transitionI.css">
+</head>
+<body>
+    <header>
+        <img id="haut" src="../../style/image/haut.png">
+        <img id="bas" src="../../style/image/bas.png">
+    </header>
+</body>
+    <h1 id="t1">Terima kasih telah mengikuti tes kursus digital kami,
+        Silakan pelajari kursus ini dengan cermat dan jawab pertanyaan yang relevan!
+    </h1>
+    <form id="f1">
+        <input type="checkbox" id="certify" name="certify">
+        <label for="certify"> Saya mengonfirmasi bahwa saya telah memahami informasi terkait tes kursus ini dan setuju untuk berpartisipasi dalam tes anonim ini. </label>
+    </form>
+    <form >
+        <label for="code"> Masukkan kode verifikasi &nbsp;</label>
+        <input type="text" id="code" name="code">
+        <button type="submit" onclick="myFunction()">Mulai</button>
+    </form>
+    <script>
+        function myFunction() {
+            event.preventDefault();
+            let certify = document.getElementById("certify").checked;
+            if (!certify) {
+                alert("Tolong jawab semua pertanyaan");
+                return;
+            }
+            let input = document.getElementById("code").value;
+            if (input === "Indonesia") {
+                let groupe = Math.floor(Math.random() * 4) + 1;
+                if(groupe === 1)
+                    groupe = "KCR";
+                else if(groupe === 2)
+                    groupe = "AUC";
+                else if(groupe === 3)
+                    groupe = "EFE";
+                else
+                    groupe = "AUCEFE";
+                localStorage.setItem("cle", "Indonesia");
+                localStorage.setItem("groupe", groupe);
+                localStorage.setItem("navigation", JSON.stringify([]));
+                //
+                window.location.href = "transition2.html";
+                //
+            } else {
+                alert("Kode verifikasi error, silakan masukkan kembali");
+            }
+        }
+    </script>
+</html>
