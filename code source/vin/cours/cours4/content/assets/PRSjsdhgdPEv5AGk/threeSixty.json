@@ -1,0 +1,57 @@
+{
+  "version": "3.86.32080.0",
+  "course_id": "5owlVHA7lJD",
+  "title": "M6_Bloc 2",
+  "thumbnail": "story_content/thumbnail.jpg",
+  "scenes": [
+    {
+      "title": "Skenario tanpa nama"
+    }
+  ],
+  "slides": [
+    {
+      "id": "6KqsDfOoHoI",
+      "title": "Tentukan metode pembumian yang sesuai",
+      "scene_index": "1.1"
+    },
+    {
+      "id": "6Cqt7McORNz",
+      "title": "Tentukan metode pembumian yang sesuai",
+      "scene_index": "1.2"
+    },
+    {
+      "id": "5mnmnMvaBt3",
+      "title": "Berbagai elemen yang dibutuhkan untuk pekerjaan instalasi ini.",
+      "scene_index": "1.3"
+    },
+    {
+      "id": "5j9GTxh6fV6",
+      "title": "Berbagai elemen yang dibutuhkan untuk pekerjaan instalasi ini.",
+      "scene_index": "1.4"
+    },
+    {
+      "id": "5oKKqdUniNL",
+      "title": "Belanja",
+      "scene_index": "1.5"
+    },
+    {
+      "id": "6n9HAQ8VObX",
+      "title": "Mengidentifikasi lokasi lubang pembumian yang ideal ",
+      "scene_index": "1.6"
+    },
+    {
+      "id": "6a2nGGXNufT",
+      "title": "Menurut anda, di mana batang pembumian harus ditempatkan? ",
+      "scene_index": "1.7"
+    }
+  ],
+  "player": {
+    "name": "unified",
+    "width": 2180,
+    "height": 1198
+  },
+  "stage": {
+    "width": 1920,
+    "height": 1080
+  }
+}
