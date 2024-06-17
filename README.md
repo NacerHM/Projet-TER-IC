@@ -9,11 +9,11 @@ The TER project "development of a website to carry out studies on the effects of
 Currently, we have been able to collect data from more than 1200 students in China and Indonesia, who were able to undergo this experience.
 
 ## Sommaire
-[Rapport du projet](RenduFinaux/Rapport de projet.pdf)
-[Manuel d'installation](RenduFinaux/Manuel d'installation.pdf)
-[Manuel d'utilisation](RenduFinaux/Manuel d'utilisation.pdf)
-[Plan de test](RenduFinaux/Plan de test.pdf)
-[Code source](code source)
-[Documentation interne](DocumentationInterne)
-[Compte rendu](CR)
+[Rapport du projet](RenduFinaux/Rapport de projet.pdf)  
+[Manuel d'installation](RenduFinaux/Manuel d'installation.pdf)  
+[Manuel d'utilisation](RenduFinaux/Manuel d'utilisation.pdf)  
+[Plan de test](RenduFinaux/Plan de test.pdf)  
+[Code source](code source)  
+[Documentation interne](DocumentationInterne)  
+[Compte rendu](CR)  
 
