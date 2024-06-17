@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ma page</title>
+</head>
+<body>
+    <input type="text" id="myInput">
+    <button onclick="myFunction()">Cliquez ici</button>
+
+    <script>
+        function myFunction() {
+            //est ce que je rajouterai pas un code participant pour eviter les doublons
+            let input = document.getElementById("myInput").value;
+            if (input === "code de session") {
+                let groupe = Math.floor(Math.random() * 4) + 1;
+                if(groupe === 1)
+                    groupe = "KCR";
+                else if(groupe === 2)
+                    groupe = "AUC";
+                else if(groupe === 3)
+                    groupe = "EFE";
+                else
+                    groupe = "AUCEFE";
+                localStorage.setItem("cle", "code de session");
+                localStorage.setItem("groupe", groupe);
+                window.location.href = "/ques1.html";
+            } else {
+                alert("Vous avez saisi un code de session invalide");
+            }
+        }
+    </script>
+</body>
+</html>

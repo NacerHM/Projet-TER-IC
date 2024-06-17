@@ -1,0 +1,55 @@
+@charset "UTF-8";
+.consigne {
+    color : white;
+    margin-bottom: 30px;
+    padding: 1%;
+    background-color: #3DCD58;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid #3DCD58;
+    
+}
+th:first-child , td:first-child{
+    width: auto;
+    text-align: left;
+}
+th{
+    font-weight: normal;
+    color : white;
+    width: 8%;
+    background-color: #3DCD58;
+    text-align: center;
+}
+
+th, td {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+button {
+    background-color: #3DCD58;
+    color: white;
+    margin: 1% 0 1% 80%;
+    border: none;
+    cursor: pointer;
+    width: 100px;
+    height: 50px;
+    border-radius: 30px;
+}
+#ques3{
+    margin: 8% 20%;
+}
+label{
+    font-size: larger;
+}
+select{
+    font-size: medium;
+}
+input[type="radio"]{
+    width: 20px;
+    height: 30px;
+}

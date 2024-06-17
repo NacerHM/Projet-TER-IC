@@ -1,0 +1,34 @@
+p{
+    margin: 14% 0 3% 5%;
+    color: #3DCD58;
+    font-size: 150%;
+}
+button {
+    background-color: #3DCD58;
+    color: white;
+    margin: 1% 0 1% 70%;
+    border: none;
+    cursor: pointer;
+    width: 100px;
+    height: 50px;
+    border-radius: 30px;
+}
+input[type="radio"] {
+    margin: 0 1% 0 5%;
+}
+body {
+    margin: 0% 20%;
+
+}
+#ques {
+    width: 400px;
+    margin: 0 2%;
+}
+#rep {
+    width: 100px;
+    margin: 0 2%;
+}
+input[type="radio"]{
+    width: 20px;
+    height: 20px;
+}

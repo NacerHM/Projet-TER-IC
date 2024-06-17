@@ -1,0 +1,31 @@
+h1#question{
+    color: #3DCD58;
+}
+input[type="submit"],button {
+    background-color: #3DCD58;
+    color: white;
+    margin: 1% 0 1% 70%;
+    border: none;
+    cursor: pointer;
+    width: 100px;
+    height: 50px;
+    border-radius: 30px;
+    white-space: normal;
+}
+input[type="radio"] {
+    margin: 0 1% 0 5%;
+}
+body {
+    margin: 8% 20%;
+
+}	
+div{
+    white-space: normal;
+}
+#commentaire{
+    font-size: larger;
+}
+input[type="radio"]{
+    width: 20px;
+    height: 30px;
+}
