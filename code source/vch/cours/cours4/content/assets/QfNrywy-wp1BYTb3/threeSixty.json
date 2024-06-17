@@ -1,0 +1,57 @@
+{
+  "version": "3.86.32080.0",
+  "course_id": "5owlVHA7lJD",
+  "title": "M6_Bloc 2",
+  "thumbnail": "story_content/thumbnail.jpg",
+  "scenes": [
+    {
+      "title": "无标题场景"
+    }
+  ],
+  "slides": [
+    {
+      "id": "6KqsDfOoHoI",
+      "title": "确定适当的接地方法",
+      "scene_index": "1.1"
+    },
+    {
+      "id": "6Cqt7McORNz",
+      "title": "确定适当的接地方法",
+      "scene_index": "1.2"
+    },
+    {
+      "id": "5mnmnMvaBt3",
+      "title": "接地安装所需的元件",
+      "scene_index": "1.3"
+    },
+    {
+      "id": "5j9GTxh6fV6",
+      "title": "接地安装所需的元件",
+      "scene_index": "1.4"
+    },
+    {
+      "id": "5oKKqdUniNL",
+      "title": "商店",
+      "scene_index": "1.5"
+    },
+    {
+      "id": "6n9HAQ8VObX",
+      "title": "确定理想的接地坑位置 ",
+      "scene_index": "1.6"
+    },
+    {
+      "id": "6a2nGGXNufT",
+      "title": "您认为应将接地杆放置在什么位置？ ",
+      "scene_index": "1.7"
+    }
+  ],
+  "player": {
+    "name": "unified",
+    "width": 2180,
+    "height": 1198
+  },
+  "stage": {
+    "width": 1920,
+    "height": 1080
+  }
+}
