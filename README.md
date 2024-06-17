@@ -15,5 +15,5 @@ Currently, we have been able to collect data from more than 1200 students in Chi
 [Plan de test](RenduFinaux/Plan%20de%20test.pdf)  
 [Code source](code%20source)  
 [Documentation interne](DocumentationInterne)  
-[Compte rendu](CR)  
+[Compte rendu de réunion](CR)  
 
