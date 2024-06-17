@@ -1,0 +1,5 @@
+Ordre du jour :
+-demonstration de la sauvegarde des donnés
+A faire :
+-que les pages ne soit pas accessible pour les exterieur 
+-derouler pour indonesie

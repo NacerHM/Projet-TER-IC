@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="../../style/test.css">
+</head>
+<body>
+ 
+ 
+    <form><!--questionnaire contenant toutes les question de l'evaluation-->
+        <div></div><!--permet de cree dynamiquement les questions-->
+        <br>
+        <button type="submit" onclick="next()">下一页</button><!--bouton permettant de passer a la page suivante et d'enregistrer le score de l'eleve-->
+    </form>
+ 
+ 
+ 
+    <script>
+      if (localStorage.getItem("cle") === "code de session"){//on verifie si la personne est connectée
+          const time = new Date().getTime();
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));//on recupere le tableau de navigation present dans le local storage
+          navigation.push(nvEl);//on ajoute la page actuelle au tableau de navigation
+          localStorage.setItem("navigation", JSON.stringify(navigation));//on met a jour le tableau de navigation
+      } else {
+          window.location.href = "../transition/transition1.html";//si la personne n'est pas connectée on la redirige vers la page de connexion
+      }
+ 
+        //A completer
+ 
+        let question = [//on definit ici les questions et leur reponse possible, la reponse attendue et la partie a laquelle elle appartient. On peut egalement ajouter des images
+        //la structure est la suivante : [question, [reponse possible], reponse attendue, partie], pour les images : [[image, question], [[image, reponse possible],[image, reponse possible],...], reponse attendue, partie]
+            [["imgtest/q1.png",'下图 4 个组件中，缺少哪个组件该电路仍能正常运行：'], ['发电机','灯','导线','开关'], '开关', 'p1'],
+            ['以下关于交流和直流的说法哪一项是不正确的？ ', ['交流可以存储','直流可以存储','交流向 2 个方向循环','直流沿 1 个方向流动'], '交流可以存储', 'p1'],
+            [["imgtest/q3.png",'下图显示的是一个三相电路：'], ['正确','错误'], '错误', 'p1'],
+            [["imgtest/q4.png",'关于以下电路的说法哪一项是不正确的？'], ['这是一个串联电路','这是一个并联电路','U = U L1 = U L2 = U L3','I = I1 + I2 + I3'], '这是一个串联电路', 'p1'],
+            [["imgtest/q5.png",'在下面的电路中，流过第二个灯泡的电流强度是多少？'], ['3A','5A','8A','11A'], '5A', 'p1'],
+            [["imgtest/q6.png",'在下面的电路中，第三个灯泡的电压是多少？'], ['6V','8V','10V','16V'], '8V', 'p1'],
+            [["imgtest/q7.png",'以下电路中的总电阻是多少？'], ['20 Ω','30 Ω','90 Ω','40 Ω'], '90 Ω', 'p1'],
+            [["imgtest/q8.png",'下面并联电路中的总电阻是多少？'], ['10 Ω','20 Ω','30 Ω','110 Ω'], '10 Ω', 'p1'],
+ 
+            ['下列哪个符号是接地符号？', [["imgtest/q9a.png",'a'], ["imgtest/q9b.png",'b'], ["imgtest/q9c.png",'c']], 'b', 'p2'],
+            ['住宅接地的主要目的是什么？', ['保护用户','保护设备','保护用户和设备'], '保护用户和设备', 'p2'],
+            ['故障电流出现时，设备接地可以', ['切断电源。','使电流流散到大地。','关闭设备。'], '使电流流散到大地。', 'p2'],
+            ['接地坑所需的最小深度是多少？', ['3 米','1 米','80 厘米','60 厘米'], '60 厘米', 'p2'],
+            ['下列哪项不属于接地系统：', ['TT','TN','IT','TI'], 'TI', 'p2'],
+            ['最常用的接地方法是：', ['金属管接地','金属条接地','金属板接地'], '金属管接地', 'p2'],
+            ['接地线的颜色为', ['蓝色','红色','绿色和黄色','蓝色和黄色'], '绿色和黄色', 'p2']
+        ];
+ 
+        //jusqu'a ici
+ 
+        //randomisation
+        Array.prototype.shuffle = function() {//fonction permettant de melanger les elements d'un tableau
+            var currentIndex = this.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {//tant que l'indice n'est pas 0
+                randomIndex = Math.floor(Math.random() * currentIndex);//on genere un indice aleatoire
+                currentIndex -= 1;//on decremente l'indice
+                temporaryValue = this[currentIndex];//on stoke la valeur etant actullement a l'indice currentIndex(soit celui qui decremente)
+                this[currentIndex] = this[randomIndex];//on remplacce dans le tableau la valeur de l'indice currentIndex par la valeur de l'indice aleatoire
+                this[randomIndex] = temporaryValue;//on remplace dans le tableau la valeur de l'indice aleatoire par la valeur stocke precedemment
+            }
+            return this;//on retourne le tableau melange
+        };
+ 
+        question = question.shuffle();//on melange les questions
+        for(let i = 0; i < question.length; i++) {//pour chaque question on melange les reponses
+            question[i][1] = question[i][1].shuffle();
+        }
+ 
+ 
+        for (i = 0; i < question.length; i++) {//on cree dynamiquement le questionnaire
+ 
+            // Sélectionner le formulaire existant
+            let form = document.querySelector('div');
+ 
+            if(Array.isArray(question[i][0])) {//si le premier element de la question est un tableau alors on a une image avec la question
+                let p = document.createElement('p');//on cree un element p
+                p.textContent = question[i][0][1];//on ajoute le texte de la question 
+                form.appendChild(p);//on ajoute le p au formulaire
+                let img = document.createElement('img');//on cree un element img
+                img.id = 'ques';//on lui donne un id
+                img.src = question[i][0][0];//on lui donne un src
+                form.appendChild(img);//on ajoute l'image au formulaire
+                form.appendChild(document.createElement('br'));//on ajoute un saut de ligne permettant de separer les questions
+            } else {//sinon on a juste une question
+                let p = document.createElement('p');//on cree un element p
+                p.textContent = question[i][0];//on ajoute le texte de la question
+                form.appendChild(p);//on ajoute le p au formulaire
+            }
+ 
+            for (let j = 0; j < question[i][1].length; j++) {//on cree les reponses possibles, en fonction du nombre de reponse possible
+                if(Array.isArray(question[i][1][j])) {//pour chaque reponse possible si l'element est un tableau alors on a une image avec la reponse
+                    let img = document.createElement('img');
+                    img.id = 'rep';
+                    img.src = question[i][1][j][0];
+                    form.appendChild(img);
+                    let input = document.createElement('input');
+                    input.type = 'radio';
+                    input.id = question[i][1][j][1].toLowerCase();
+                    input.name = 'question'+i;
+                    input.value = question[i][1][j][1];
+ 
+                    let label = document.createElement('label');
+                    label.htmlFor = question[i][1][j][1].toLowerCase();
+                    label.textContent = question[i][1][j][1];
+ 
+                    form.appendChild(input);
+                    form.appendChild(label);
+                    form.appendChild(document.createElement('br'));
+                    form.appendChild(document.createElement('br'));
+                    form.appendChild(document.createElement('br'));
+                }
+                else {//sinon on a juste une reponse
+                    let input = document.createElement('input');
+                    input.type = 'radio';
+                    input.id = question[i][1][j].toLowerCase();
+                    input.name = 'question'+i;
+                    input.value = question[i][1][j];
+ 
+                    let label = document.createElement('label');
+                    label.htmlFor = question[i][1][j].toLowerCase();
+                    label.textContent = question[i][1][j];
+ 
+                    form.appendChild(input);
+                    form.appendChild(label);
+                }
+            }
+ 
+        }   
+ 
+ 
+        //ici on veux separer les questions en fonction de la partie a laquelle elle appartient afin d'avoir 2 score d'istinct
+        let score1 = 0;
+        let score2 = 0;
+ 
+        // Parcourir chaque question
+        function calculateScore() {//cette fonction permet de calculer les scores de l'eleve
+            for (let i = 0; i < question.length; i++) {//pour chaque question
+                let radios = document.getElementsByName('question' + i);// Obtenir les boutons radio pour cette question
+                for (let j = 0; j < radios.length; j++) {// Parcourir chaque bouton radio
+                    let radio = radios[j];
+                    if (radio.checked && radio.value === question[i][2] || radio.checked && radio.value === question[i][2][1]) {// Si ce bouton radio est coché et sa valeur est la bonne réponse
+                        if (question[i][3] === 'p1') {//en fonction de si il appartient a la partie 1 ou 2 on incremente le score correspondant
+                            score1++;// Augmenter le score
+                        } else if (question[i][3] === 'p2') {
+                            score2++;// Augmenter le score
+                        }
+                    }
+                }
+            }
+        }
+
+        function next() {//fonction qui se declenche lorsqu'on clique sur le bouton suivant
+            event.preventDefault();
+            let allAnswered = true;//on initialise la variable allAnswered a true
+            for (let i = 0; i < question.length; i++) {
+                let radios = document.getElementsByName('question' + i);//on recupere les boutons radio de la question i
+                let answered = false;
+                for (let radio of radios) {//pour chaque bouton radio on regarde si il est coche
+                    if (radio.checked) {//si l'un d'eux est coche on sort de la boucle et on met answered a true
+                        answered = true;
+                        break;
+                    }
+                }
+                if (!answered) {//si apres avoir parcourus tout les boutons radio aucun ne s'est averer cocher on sort de la boucle et on met allAnswered a false
+                    allAnswered = false;
+                    break;
+                }
+            }
+            if (!allAnswered) {//si toute les reponses n'ont pas ete cochees on affiche un message d'erreur
+                alert('请回答所有问题');
+            } else {
+                calculateScore();//sinon on calcule le score
+                let existe = localStorage.getItem('score1');//on verifie que le score n'existe pas deja
+                if (existe) {
+                    //rien
+                } else {
+                    const time2 = new Date().getTime();
+                    nvEl = {
+                      time: time2,
+                      page: window.location.pathname
+                    };
+                    let navigation = JSON.parse(localStorage.getItem("navigation"));
+                    //on enregistre les informations dans le local storage
+                    navigation.push(nvEl);
+                    localStorage.setItem("navigation", JSON.stringify(navigation));
+                    localStorage.setItem('score1', score1);
+                    localStorage.setItem('score2', score2);
+                }
+            window.location.href = "../transition/transition4";//et on redirige vers la page suivante
+            }
+        }
+ 
+ 
+ 
+    </script>
+ 
+</body>

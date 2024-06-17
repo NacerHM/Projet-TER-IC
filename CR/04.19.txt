@@ -1,0 +1,5 @@
+Ordre du jour :
+-modfication des cours chinois
+A faire :
+-ajouter au serveur les different cours
+-corriger les routes

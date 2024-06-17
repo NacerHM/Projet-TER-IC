@@ -1,0 +1,6 @@
+Ordre du jour :
+-demo des template de questionnaire et quiz
+-discussion sur la continuation du projet seule
+A faire :
+-Xiaodan va m'envoyer les question a mettre dans les questionnaires
+-remplir les questionnaire

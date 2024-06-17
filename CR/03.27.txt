@@ -1,0 +1,7 @@
+Ordre du jour :
+-demo des quiz avec feedback
+-mise au point sur mon avancement avec OVH 
+-demonstration d'une premiere page web
+A faire :
+-continuer a me former
+-cree le script de sauvegarde des données

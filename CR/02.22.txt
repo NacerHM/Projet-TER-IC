@@ -1,0 +1,6 @@
+Ordre du jour :
+-point sur l'avancement
+A faire :
+-rendre la structure de mon code plus coherente
+-quiz a finir
+-enlever les chiffre au debut des quizs

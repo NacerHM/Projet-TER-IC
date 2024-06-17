@@ -1,0 +1,9 @@
+Ordre du jour :
+-temps de chargements du site web:
+    question de Xiaodan par rapport au temps de chargements du site web, temps qui aurait été relativement important sur les pages des different quiz
+    le probleme ne s'est pas repeter et je n'ai jamais eu l'occasion d'avoir ce probleme, j'en ai donc conclu qu'il etait plutot lié a la connexion
+-question sur la suite du projet : par rapport a l'inteface prevus au depart
+    Xiaodan n'en vois finalement pas l'utiliter, et ne sera pas assez disponible sur la fin d'année
+    Demande de Xiaodan d'annuler la derniere partie et de m'occuper a la place de la maintenance du site : changement lié a des fautes verification des données...
+A faire :
+-cree des template et explication facilement reutilisable pour chaque partie

@@ -1,0 +1,9 @@
+Ordre du jour :
+-ordre des differente page
+accueil ->ques1->rappel->pre eval -> cours -> quiz-> ques2 -> post eval -> ques3 -> fin
+A faire :
+-Xiaodan va m'envoyer les evaluation et rappelle de cours pour chinois et indo 
++ cours en chinois
+-cree les tests
+-enregistrement des donne
+-ranger les fichier

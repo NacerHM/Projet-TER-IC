@@ -1,0 +1,30 @@
+//acces interdit sur les fichier
+//probleme avec le cours1
+//refaire les liens des differents cours
+//deuxieme ques suivis du 3eme ou page fin
+//ques3 pas de veirf de si on rempli tout
+//ques diviser si possible
+//recuperer donné
+//faire en sorte qu'on puisse pas modifier sa 1er réponse
+//dans les test on peut ne pas cohcer => forcer gens a rep ou verif que ca pose pas de soucis si une n'est pas cocher
+
+bouton soumettre qui se deplace par rapport aux commentaire
+->voir si ca convient a xiaodan
+
+mettre en avant les question et espacer pour les test
+mise en forme
+remettre les info pour 0 et 5 dans les ques
+acces interdit dossier
+
+ques1
+[11:09] Xiaodan Zeng
+Sama sekali tidak sesuai
+[11:09] Xiaodan Zeng
+Sangat sesuai sekali
+
+consigne 2F ET
+Pilih nomor untuk menjawab pertanyaan. Jika Anda sangat setuju dengan uraian tersebut, silakan pilih 5 ; jika Anda sangat tidak setuju dengan uraian tersebut, silakan pilih 0 . Jika Anda kurang lebih setuju dengan uraian tersebut, pilihlah angka antara 0 dan 5 yang paling menggambarkan diri Anda.
+
+[16:36] Xiaodan Zeng
+我确认已了解本次课程测试的相关信息，并同意参与此匿名测试。
+Saya mengonfirmasi bahwa saya telah memahami informasi terkait tes kursus ini dan setuju untuk berpartisipasi dalam tes anonim ini. 

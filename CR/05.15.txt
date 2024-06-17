@@ -1,0 +1,4 @@
+Ordre du jour :
+-probleme avec les quiz : on peut cliquer sur suivant sans avoir repondu ce qui entraine un feedback non coherent
+A faire :
+-rendre le bouton incliquable et mettre une alert qui indique qu'il faut repondre a la question

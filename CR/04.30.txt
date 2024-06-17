@@ -1,0 +1,5 @@
+ordre du jour:
+-cours de rappelle
+-demo du pre et post test
+A faire :
+-integrer les cours de rapelle

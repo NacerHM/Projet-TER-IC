@@ -1,0 +1,6 @@
+Ordre du jour :
+-quiz, certaine question seront seule apres un cours et pour d'autre il yen aura 2 qui se suivereont mais pas sur la meme page
+-demo questionnaires
+A faire :
+-faire une feuille de style pour les quiz et questionnaires
+-modifier ma template pour que le quiz soit randomiser

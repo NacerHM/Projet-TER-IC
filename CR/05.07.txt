@@ -1,0 +1,6 @@
+Ordre du jour :
+-questionnaire : apres reflexion Xiaodan les trouve trop charger, il faudrait donc les decouper en plus petite partie
+-de plus il serait mieux qu'il soit randomiser
+A faire :
+-decoupage des differents questionnaire 
+-systeme de randomisation

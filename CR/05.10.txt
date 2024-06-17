@@ -1,0 +1,8 @@
+Ordre du jour :
+-mis en page quiz : le feedback et la reponse etait respectivement avant et apres le bouton ce qui dans certaine situation peuvent donner une impression etrange
+-les differents styles
+A faire :
+-modfication des differents quizs
+-cree un style pour les transition
+-appliquer ceux deja cree et les adapter
+-interdir l'acces sans mot de passe

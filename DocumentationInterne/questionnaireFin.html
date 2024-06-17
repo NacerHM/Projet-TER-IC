@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ques</title>
+    <link rel="stylesheet" type="text/css" href="../../style/questionnaire.css">
+</head>
+<body>
+ 
+ 
+<form id="ques3" onsubmit=""><!-- ce questionnaire permet de recuperer les information presonelle : genre, age...-->
+ 
+    <label for="gender">我是一名</label>
+    <select id="gender" name="gender" required>
+        <option value="boy">男生</option>
+        <option value="girl">女生</option>
+    </select>
+    <label for="gender">。</label>
+    <br>
+    <br>
+    <label for="age">我今年 </label>
+    <input type="number" id="age" name="age" min="13" max="99" step="1" required>
+    <label for="age">岁。</label>
+    <br>
+    <br>
+    <label for="computer_time">我每周用电脑或是平板电脑的频率是?</label>
+    <select id="computer_time" name="computer_time" required>
+        <option value="day">每天</option>
+        <option value="more">至少一周三次</option>
+        <option value="less">少于一周三次</option>
+    </select>
+    <br>
+    <br>
+    <label for="school">我已经完成了</label>
+    <select id="school" name="school" required>
+        <option value="middle">初中</option>
+        <option value="hight">高中</option>
+        <option value="undergraduate">本科</option>
+        <option value="graduate">硕士或博士研究生</option>
+    </select>
+    <label for="school">学习。</label>
+    <br>
+    <br>
+    <button id="nextButton" type="button" onclick="next()">下一页</button>
+ 
+ 
+</form>
+    <script>
+       if (localStorage.getItem("cle") === "code de session"){//on verifie si la personne est connectée
+          const time = new Date().getTime();//on recupere le temps actuel
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));//on recupere le tableau de navigation present dans le local storage
+          navigation.push(nvEl);//on ajoute la page actuelle au tableau de navigation
+          localStorage.setItem("navigation", JSON.stringify(navigation));//on met a jour le tableau de navigation
+      } else {
+          window.location.href = "../transition/transition1.html";// si la personne n'est pas connectée on la redirige vers la page de connexion
+      }
+ 
+        function next(){//fonction qui se declenche lorsqu'on clique sur le bouton suivant
+            event.preventDefault();
+            let infoperso;
+            let genderValue;
+            let ageValue;
+            let computer_timeValue;
+            let schoolValue;
+ 
+            try{//on verifie si tous les champs ont été remplis
+                infoperso = document.getElementById("ques3");
+                genderValue = infoperso.gender.value;
+                ageValue = infoperso.age.value;
+                computer_timeValue = infoperso.computer_time.value;
+                schoolValue = infoperso.school.value;
+                if (!genderValue || !ageValue || !computer_timeValue || !schoolValue) {
+                    throw new Error("Tous les champs n'ont pas été remplis");
+                }
+            }catch(e){
+                alert("请回答所有问题");//si tous les champs n'ont pas été remplis on affiche un message d'erreur
+                return;//on arrete l'execution de la fonction
+            }
+            const time2 = new Date().getTime();//on recupere le temps actuel soit apres que la personne ai fini de remplir le questionnaire
+            nvEl = {
+                time: time2,
+                page: window.location.pathname
+            };
+            let navigation = JSON.parse(localStorage.getItem("navigation"));
+            navigation.push(nvEl);
+            //on enregistre les informations dans le local storage
+            localStorage.setItem("navigation", JSON.stringify(navigation));
+            localStorage.setItem("gender", genderValue);
+            localStorage.setItem("age", ageValue);
+            localStorage.setItem("computer_time", computer_timeValue);
+            localStorage.setItem("school", schoolValue);
+            savedata(data);//fonction qui permet d'envoyer les informations au serveur
+            window.location.href = "../transition/transition6.html";
+        }
+        let data = enregistrement();//variable qui contient toutes les informations enregistrées dans le local storage
+        function enregistrement() {//fonction qui permet de recuperer les informations enregistrées dans le local storage
+            event.preventDefault();
+            let data = {};
+ 
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                let value = localStorage.getItem(key);
+                data[key] = value;
+            }
+ 
+            return data;
+        }
+        function savedata (data) {//fonction qui permet d'envoyer les informations au serveur
+            let xhr = new XMLHttpRequest();// Creation d'un objet XMLHttpRequest
+            let url = "../../exemplesavedata.php";
+            xhr.open ("POST", url, true);// ouverture de la requete
+            xhr.setRequestHeader ("Content-Type", "application/json");
+            xhr.send (JSON.stringify (data));// Envoi de la requete
+            localStorage.clear();//on vide le local storage
+        }
+ 
+    </script>
+</body>

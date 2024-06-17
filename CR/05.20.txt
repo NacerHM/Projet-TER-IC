@@ -1,0 +1,6 @@
+Ordre du jour :
+-retour de l'equipe chinoise 
+A faire :
+-case de consentement au niveau de la premiere transition
+-taille des bouton
+-correction transition 5

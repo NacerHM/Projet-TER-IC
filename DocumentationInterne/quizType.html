@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" type="text/css" href="../../style/quiz.css">
+</head>
+<body>
+ 
+ 
+    <h1 id="question"></h1><!-- espace permettant d'afficher dynamiquement la question -->
+ 
+    <form id='questionnaire' onsubmit="correction(event)">
+        <span id="q1"></span><!-- espace permettant d'afficher dynamiquement les reponses -->
+        <br>
+        <span id="q2"></span>
+        <br>
+        <span id="q3"></span>
+        <br>
+        <span id="q4"></span>
+        <br>
+        <pre><div id="commentaire"></div></pre>
+        <br>
+        <input type="submit" value="下一页"><!-- bouton permettant de valider la reponse et d'afficher la correction-->
+    </form> 
+    <button id="nextButton" type="button" style="display: none;" onclick="next()">下一页</button><!-- bouton permettant de passer a la page suivante, cacher tant qu'on a pas repondu -->
+ 
+    <script>
+      if (localStorage.getItem("cle") === "code de session"){
+          const time = new Date().getTime();//on recupere le temps actuel
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));//on recupere le tableau de navigation present dans le local storage
+          navigation.push(nvEl);//on ajoute la page actuelle au tableau de navigation
+          localStorage.setItem("navigation", JSON.stringify(navigation));//on met a jour le tableau de navigation
+      } else {
+          window.location.href = "../transition/transition1.html";//si la personne n'est pas connectée on la redirige vers la page de connexion
+      }
+ 
+        //A completer
+        //
+        //
+        let quizContent = {//on definit le contenu du quiz, la question, les reponses possibles, la reponse correcte, les explications
+                numero: "quiz3",
+                question: "为一所农村别墅建立接地系统时，我们应选择：",
+                reponse: [['A', 'TN S 系统'],
+                ['B', 'IT系统'],
+                ['C', 'TN C 系统'],
+                ['D', 'TT 系统']],
+                correct: "正确!",
+                incorrect: "不正确。正确答案是",
+                essayeEncore: "不正确。再试一次!",
+                explicationA: "不正确。TN S系统通常用于城市人口密集的住宅，商业建筑及工业用途。",
+                explicationB: "不正确。IT系统适用于供电连续性要求高的场所，如医院和商业船只等。",
+                explicationC: "不正确。TN C系统常用于工业用途。",
+                explicationD: "正确！TT系统更安全可靠，适用于家庭用途。",
+                bonneReponse: ['D', //numero A B C ou D
+                "TT 系统", //le text de la bonne reponse
+                "正确！TT系统更安全可靠，适用于家庭用途。"], //explication quand on coche la bonne reponse, en duplicat avec l'explicationC
+                explicationfin: ["\u000A正确答案是" + //reponse fausse
+                "\u0022 TT 系统 \u0022\u000A"+ //on cite la reponse juste
+                "因为TT系统更安全可靠，适用于家庭用途。 ", //explication
+                "再试一次!"],
+                prochainCours: "../cours/cours2/content/"
+            };
+        // jusqu ici ;
+        //
+        //
+ 
+ 
+        //on affiche la question
+        let questionDiv = document.getElementById('question');
+        questionDiv.innerHTML = quizContent.question;
+ 
+        //la on randomise les reponses
+        let q1=document.getElementById('q1');//on recupere les elements du formulaire
+        let q2=document.getElementById('q2');
+        let q3=document.getElementById('q3');
+        let q4=document.getElementById('q4');
+        let commentaire = document.getElementById('commentaire');
+ 
+        function randomisation(array) {//fonction permettant de randomiser les reponses
+            let tableauRandomise = [...array];//on cree une copie du tableau
+            for (let i = tableauRandomise.length - 1; i > 0; i--) {//on parcourt le tableau 
+                const j = Math.floor(Math.random() * (i + 1));//on genere un nombre aleatoire entre 0 et le nombre de reponses
+                [tableauRandomise[i], tableauRandomise[j]] = [tableauRandomise[j], tableauRandomise[i]];//on echange les reponses pour les melanger
+            }
+            return tableauRandomise;
+        }
+ 
+        let reponsesRandomisees = randomisation(quizContent.reponse);
+ 
+        q1.innerHTML='<label id='+reponsesRandomisees[0][0]+'><input type="radio" name="question1" id='+reponsesRandomisees[0][0]+' /> ' + reponsesRandomisees[0][1] + '</label>';//on cree dynamiquement les reponses possible en associant a chaque reponse le bon id
+        q2.innerHTML='<label id='+reponsesRandomisees[1][0]+'><input type="radio" name="question1" id='+reponsesRandomisees[1][0]+' /> ' + reponsesRandomisees[1][1] + '</label>';
+        q3.innerHTML='<label id='+reponsesRandomisees[2][0]+'><input type="radio" name="question1" id='+reponsesRandomisees[2][0]+' /> ' + reponsesRandomisees[2][1] + '</label>';
+        q4.innerHTML='<label id='+reponsesRandomisees[3][0]+'><input type="radio" name="question1" id='+reponsesRandomisees[3][0]+' /> ' + reponsesRandomisees[3][1] + '</label>';
+ 
+ 
+        let button = document.querySelector('input[type="submit"]');//on recupere le bouton de validation
+        button.disabled = true;//on desactive le bouton de validation(on ne peut pas cliquer sur suivant tant qu'on a pas répondu)
+        let options = document.querySelectorAll('input[type="radio"]');//on recupere les reponses possibles
+        options.forEach(option => {//si une reponse est selectionnee on active le bouton de validation
+            option.addEventListener('change', () => {
+                button.disabled = false;
+            });
+        });
+ 
+ 
+        //pour la correction
+        let list_answers = [];
+        let groupe = localStorage.getItem('groupe');//on recupere le groupe de l'utilisateur pour lui afficher le bon quiz
+        function correction(event){//fonction qui se declenche lorsqu'on clique sur le bouton de validation, permet d'afficher et de lancer la bonne correction en fonction du groupe
+            event.preventDefault();
+            if(groupe === "KCR"){
+                correctionKCR(event);
+            }else if(groupe === "AUC"){
+                correctionAUC(event);
+            }else if(groupe === "EFE"){
+                correctionEFE(event);
+            }else {
+                correctionAUCEFE(event);
+            }
+        }
+ 
+        function correctionKCR(event){//fonction qui permet de corriger le quiz pour le groupe KCR, indique si la reponse est correcte ou affiche la bonne reponse
+            event.preventDefault();
+ 
+            let selectedOption = questionnaire.querySelector('input[name="question1"]:checked');//on recupere la reponse selectionnee
+            console.log(selectedOption);
+ 
+            if (selectedOption && selectedOption.id === quizContent.bonneReponse[0]) {//on compare la reponse selectionnee a la bonne reponse
+                commentaire.textContent = quizContent.correct;//si c'est la meme on affiche correct
+            } else {
+                commentaire.textContent = quizContent.incorrect+' \u0022'+ quizContent.bonneReponse[1]+'\u0022';//sinon on affiche la bonne reponse
+            }
+            list_answers.push(selectedOption.id);//on ajoute la reponse a la liste des reponses
+            document.querySelector('input[type="submit"]').style.display = 'none';//on cache le bouton de correction
+            document.getElementById('nextButton').style.display = 'block';//on affiche le bouton suivant
+        }
+ 
+        function correctionAUC(event){//fonction qui permet de corriger le quiz pour le groupe AUC, indique si la reponse est correcte ou demande de reessayer
+            event.preventDefault();
+ 
+            let selectedOption = questionnaire.querySelector('input[name="question1"]:checked');//on recupere la reponse selectionnee
+ 
+            if (selectedOption && selectedOption.id === quizContent.bonneReponse[0]) {//on compare la reponse selectionnee a la bonne reponse
+                commentaire.textContent = quizContent.correct;//si c'est la meme on affiche correct
+                document.querySelector('input[type="submit"]').style.display = 'none';//on cache le bouton de correction
+                document.getElementById('nextButton').style.display = 'block';//on affiche le bouton suivant
+            } else {
+                button.disabled = true;//sinon on desactive le bouton de validation
+                commentaire.textContent = quizContent.essayeEncore;//on demande de reessayer
+                selectedOption.checked = false;//on decoche la reponse selectionnee
+                selectedOption.disabled = true;//on empeche de la selectionner a nouveau
+                document.querySelector('label#'+selectedOption.id).style.textDecoration = 'line-through';//on barre la reponse
+            }
+            list_answers.push(selectedOption.id);//on ajoute la reponse a la liste des reponses
+        }
+ 
+        function correctionEFE(event){//fonction qui permet de corriger le quiz pour le groupe EFE, indique si la reponse est correcte ou affiche la bonne reponse et explique pourquoi
+            event.preventDefault();
+ 
+            let selectedOption = questionnaire.querySelector('input[name="question1"]:checked');//on recupere la reponse selectionnee
+            if (selectedOption && selectedOption.id === quizContent.bonneReponse[0]) {//on compare la reponse selectionnee a la bonne reponse
+                commentaire.textContent = quizContent.bonneReponse[2];//si c'est la meme on affiche correct et on explique pourquoi
+            } else {
+                if (selectedOption && selectedOption.id === 'A') {//si la personne a repondu A on affiche l'explication correspondante, et affiche la bonne reponse, etc...
+                    commentaire.textContent = quizContent.explicationA + quizContent.explicationfin[0];
+                } else if (selectedOption && selectedOption.id === 'B') {
+                    commentaire.textContent = quizContent.explicationB +quizContent.explicationfin[0];
+                } else if (selectedOption && selectedOption.id === 'C') {
+                    commentaire.textContent = quizContent.explicationC +quizContent.explicationfin[0];
+                } else {
+                    commentaire.textContent = quizContent.explicationD  + quizContent.explicationfin[0];
+                }
+            }
+            list_answers.push(selectedOption.id);//on ajoute la reponse a la liste des reponses
+            document.querySelector('input[type="submit"]').style.display = 'none';//on cache le bouton de correction
+            document.getElementById('nextButton').style.display = 'block';//on affiche le bouton suivant
+        }
+ 
+        function correctionAUCEFE(event){//fonction qui permet de corriger le quiz pour le groupe AUCEFE, indique si la reponse est correcte ou non et explique pourquoi, et demande de reessayer
+            event.preventDefault();
+ 
+            let selectedOption = questionnaire.querySelector('input[name="question1"]:checked');//on recupere la reponse selectionnee
+ 
+            if (selectedOption && selectedOption.id === quizContent.bonneReponse[0]) {//on compare la reponse selectionnee a la bonne reponse
+                commentaire.textContent = quizContent.bonneReponse[2];//si c'est la meme on affiche correct et on explique pourquoi
+                list_answers.push(selectedOption.id);//on ajoute la reponse a la liste des reponses
+                document.querySelector('input[type="submit"]').style.display = 'none';//on cache le bouton de correction
+                document.getElementById('nextButton').style.display = 'block';//on affiche le bouton suivant
+            } else {
+                button.disabled = true;//sinon on desactive le bouton de validation
+                if (selectedOption && selectedOption.id === 'A') {//si la personne a repondu A on affiche l'explication correspondante, et on demande de reessayez
+                    commentaire.textContent = quizContent.explicationA+ quizContent.explicationfin[1];
+                } else if (selectedOption && selectedOption.id === 'B') {
+                    commentaire.textContent = quizContent.explicationB + quizContent.explicationfin[1];
+                } else if (selectedOption && selectedOption.id === 'C') {
+                    commentaire.textContent = quizContent.explicationC + quizContent.explicationfin[1];
+                } else {
+                    commentaire.innerText = quizContent.explicationD + quizContent.explicationfin[1];
+                }
+                selectedOption.checked = false;//on decoche la reponse selectionnee
+                selectedOption.disabled = true;//on empeche de la selectionner a nouveau
+                document.querySelector('label#'+selectedOption.id).style.textDecoration = 'line-through';//on barre la reponse
+                list_answers.push(selectedOption.id);//on ajoute la reponse a la liste des reponses
+            }
+        }
+        function next() {//fonction qui se declenche lorsqu'on clique sur le bouton suivant
+            event.preventDefault();
+            let existe = localStorage.getItem(quizContent.numero);//on verifie si le quiz a deja ete fait
+            if (existe) {
+                //rien
+            } else {
+                localStorage.setItem(quizContent.numero, JSON.stringify({answers: list_answers}));//si ce n'est pas le cas on enregistre les reponses dans le local storage
+            }
+            window.location.href = quizContent.prochainCours;//et on redirige vers la page suivante
+        }
+ 
+ 
+ 
+ 
+    </script>
+ 
+</body>		

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition</title>
+    <link rel="stylesheet" type="text/css" href="../../style/transition.css">
+</head>
+<body>
+    <header>
+        <img id="haut" src="../../style/image/haut.png">
+        <img id="bas" src="../../style/image/bas.png">
+    </header>
+</body>
+    <h1 id="t1">感谢你来参加我们的数字课程测试，
+        请认真学习课程并回答相关问题！<!-- titre de la page -->
+    </h1>
+ 
+    <form id="f1"><!--premier formulaire permettant de verifier le consentement-->
+        <input type="checkbox" id="certify" name="certify">
+        <label for="certify"> 我确认已了解本次课程测试的相关信息，并同意参与此匿名测试。 </label>
+    </form>
+    <form><!--deuxieme formulaire permettant de rentrer le code de session-->
+        <label for="code"> 输入验证码 &nbsp;</label>
+        <input type="text" id="code" name="code">
+        <button type="submit" onclick="myFunction()">开始</button><!--bouton permettant de verifier le code, le consentement et si tout est bon passer a la page suivante-->
+    </form>
+    <script>
+        function myFunction() {
+            event.preventDefault();
+            let certify = document.getElementById("certify").checked;//on verifie si la personne a bien coché la case
+            if (!certify) {
+                alert("请勾选 \u0022我确认已了解本次课程测试的相关信息，并同意参与此匿名测试。\u0022");//si la personne n'a pas coché la case on affiche une alerte lui demandant de cocher la case
+                return;//on arrete la fonction
+            }
+            let input = document.getElementById("code").value;//on recupere la valeur du code
+            if (input === "China") {//on verifie si le code est bon
+                let groupe = Math.floor(Math.random() * 4) + 1;//on genere un nombre aleatoire entre 1 et 4
+                if(groupe === 1)//on attribue un groupe en fonction du nombre genere
+                    groupe = "KCR";
+                else if(groupe === 2)
+                    groupe = "AUC";
+                else if(groupe === 3)
+                    groupe = "EFE";
+                else
+                    groupe = "AUCEFE";
+                //on stocke les informations dans le local storage
+                localStorage.setItem("cle", "code de session");
+                localStorage.setItem("groupe", groupe);
+                localStorage.setItem("navigation", JSON.stringify([]));
+ 
+                window.location.href = "transition2.html";//on redirige la personne vers la page suivante
+ 
+            } else {
+                alert("验证码错误，请重新填写");//si le code est mauvais on affiche une alerte demandant de rentrer un autre code
+            }
+        }
+    </script>
+</html>		

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page avec deux images</title>
+</head>
+<body>
+    <header>
+        <img src="imgtransition\laRac.jpg" alt="logo laRac">
+        <img src="imgtransition\uga.png.jpg" alt="logo UGA">
+    </header>
+</body>
+    <h1>Texte transition Type </h1><!--texte a afficher-->
+    <button onclick="window.location.href = '../questionnaire/ques1.html';">page suivante</button><!--bouton permettant de changer de page-->
+    <script>
+      if (localStorage.getItem("cle") === "code de session"){//on verifie si la personne est connecter
+         
+      } else {
+          window.location.href = "../transition/transition1.html";//sinon on la redirige vers la page de connexion
+      }
+    </script>
+</html>

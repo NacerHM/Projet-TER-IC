@@ -1,0 +1,4 @@
+Ordre du jour :
+-question sur l'enregistrement des données
+A faire :
+-finir le script permettant de transformer les differents json en un fichier csv
