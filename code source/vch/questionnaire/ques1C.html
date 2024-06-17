@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ques</title>
+    <link rel="stylesheet" type="text/css" href="../../style/questionnaire.css">
+</head>
+<body>
+
+    <form>
+        <div class="consigne">
+            选择数字回答问题。
+            <br>
+            如果你完全同意该 描述，请选择5（完全同意）；
+            <br>
+            如果你完全不同意该描述，请选择 0 (完全不同意)。
+            <br>
+            如果你或多或少同意该描述，请选择 0 到 5 之间最能描述你的数字。
+            <br>
+            <br>
+            关于我的专业课学习，我认为
+        </div>
+        <table>
+            <thead>
+                <th></th>
+                <th>完全不同意<br>0</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>完全同意<br>5</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <br>
+        <button type="submit" onclick="next()">下一页</button>
+    </form>
+
+
+
+    <script>
+      if (localStorage.getItem("cle") === "code de session"){
+          const time = new Date().getTime();
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));
+          navigation.push(nvEl);
+          localStorage.setItem("navigation", JSON.stringify(navigation));
+      } else {
+          window.location.href = "../transition/transition1.html";
+      }
+
+        //A completer
+            let question = [
+            ['我可以从我做错的题中学到一些东西','c1'],
+            ['我的错题对于我更好地掌握专业知识很重要。','c2'],
+            ['我通过我的错题培养新的专业知识。','c3'],
+            ['我的错题帮助我提高我的专业知识。','c4'],
+            ['我的错题帮助我以后做的更好。','c5']
+        ];        
+        
+        //jusqu'a ici
+        
+        //randomisation
+        Array.prototype.shuffle = function() {
+            var currentIndex = this.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = this[currentIndex];
+                this[currentIndex] = this[randomIndex];
+                this[randomIndex] = temporaryValue;
+            }
+            return this;
+        };
+
+        question = question.shuffle();
+
+        for (i = 0; i < question.length; i++) {
+            let table = document.querySelector('tbody');
+            let tr = document.createElement('tr');
+            let tdQuestion = document.createElement('td');
+            tdQuestion.textContent = question[i][0];
+            tr.appendChild(tdQuestion);
+            for (let j = 0; j < 6; j++) {
+                let tdRadio = document.createElement('td');
+                let input = document.createElement('input');
+                input.type = "radio";
+                input.name = question[i][1];
+                input.id = `${j}`;
+                tdRadio.appendChild(input);
+                tr.appendChild(tdRadio);
+            }
+            table.appendChild(tr);
+        }   
+        
+
+    
+
+        
+
+        //pour la correction
+        //note uniquement
+        
+        function next() {
+            event.preventDefault();
+            let allAnswered = true;
+            localStorage.getItem('answers') ? answers = JSON.parse(localStorage.getItem('answers')) : answers = [];
+            for (let i = 0; i < question.length; i++) {
+                let radios = document.getElementsByName(question[i][1]);
+                let answered = false;
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        answered = true;
+                        answers.push([question[i][1],radio.id]);
+                        break;
+                    }
+                }
+                if (!answered) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            if (!allAnswered) {
+                alert("请回答所有问题");
+            } else {
+                const time2 = new Date().getTime();
+                nvEl = {
+                  time: time2,
+                  page: window.location.pathname
+                };
+                let navigation = JSON.parse(localStorage.getItem("navigation"));
+                navigation.push(nvEl);
+                localStorage.setItem("navigation", JSON.stringify(navigation));
+                localStorage.setItem('answers', JSON.stringify(answers));
+                window.location.href = "../transition/transition3.html";
+            }
+        }
+        
+    </script>
+    
+</body>

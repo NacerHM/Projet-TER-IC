@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="../../style/test.css">
+</head>
+<body>
+
+
+    <form>
+        <div></div>
+        <br>
+        <button type="submit" onclick="next()">下一页</button>
+    </form>
+
+
+
+    <script>
+      if (localStorage.getItem("cle") === "code de session"){
+          const time = new Date().getTime();
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));
+          navigation.push(nvEl);
+          localStorage.setItem("navigation", JSON.stringify(navigation));
+      } else {
+          window.location.href = "../transition/transition1.html";
+      }
+
+        //A completer
+        
+        let question = [
+            ['接地可保护设备免受电气损坏。', ['正确','错误'], '正确', 'p1'],
+            ['接地可为电流泄漏至地面提供途径。', ['正确','错误'], '正确', 'p1'],
+            ['接地可保护接触电气设备的非金属部件的人免受电击。', ['正确','错误'], '错误', 'p1'],
+            ['金属条接地 ', ['是最经济的接地方法。','是最耐腐蚀的接地方法。','是最常用的接地方法。','需要挖掘更大的土壤表面积来安装。'], '是最耐腐蚀的接地方法。', 'p1'],
+            ['金属管接地 ', ['是最经济的接地方法。','是最耐腐蚀的接地方法。','需要挖掘更大的土壤表面积来安装。'], '是最经济的接地方法。', 'p1'],
+            ['为医院设计接地系统时，我们选择：', ['TN-S 系统','IT  系统','TN-C 系统','TT  系统'], 'IT  系统', 'p1'],
+            ['___________是埋在地下的接地系统的最后一个组件。', ['接地引线','接地连续性导线','接地电极','保险丝'], '接地电极', 'p1'],
+            ['中性线的颜色为 ', ['蓝色','红色','绿色和黄色','蓝色和黄色'], '蓝色', 'p1'],
+            ['为了安装接地坑，我需要一个接地坑盖', ['保护接地坑不受损坏。','通知接地坑的位置。','保护安装接地坑的人。'], '保护接地坑不受损坏。', 'p1'],
+            ['万用表是测量接地系统土壤电阻的最合适设备。', ['正确','错误'], '错误', 'p1'],
+            ['接地系统电阻的最佳值为：', ['0 Ω','0.4 Ω','4 Ω','10 Ω'], '0 Ω', 'p1'],
+
+            ['如果相线与地线之间发生故障，哪种接地系统电气装置可以继续运行而不中断？', ['TN S 系统','IT  系统','TN C 系统','TT  系统'], 'IT  系统', 'p2'],
+            ['在卫生间安装电气装置时，哪个设备不需要做联结：', ['金属水管','电源插座','金属煤气管道','陶瓷散热器'], '陶瓷散热器', 'p2'],
+            ['金属管接地极须安装在深度为______的接地坑里。', ['3.00 米','2.00 米','1.00 米','0.80 米'], '3.00 米', 'p2'],
+            ['安装接地装置前，应测量土壤电阻率。', ['正确','错误'], '正确', 'p2'],
+            ['安装接地装置后，应测量土壤电阻率。', ['正确','错误'], '正确', 'p2'],
+            ['下列哪一项不适合于接地坑安装：', ['接地极','沙子','木炭','万用表'], '万用表', 'p2'],
+            ['ELCB 和 RCD 均可检测和隔离电路中的接地故障。', ['正确','错误'], '正确', 'p2']
+
+        ];
+
+        //jusqu'a ici
+        
+        //randomisation
+        Array.prototype.shuffle = function() {
+            var currentIndex = this.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = this[currentIndex];
+                this[currentIndex] = this[randomIndex];
+                this[randomIndex] = temporaryValue;
+            }
+            return this;
+        };
+
+        question = question.shuffle();
+        for(let i = 0; i < question.length; i++) {
+            question[i][1] = question[i][1].shuffle();
+        }
+
+
+        for (i = 0; i < question.length; i++) {
+            
+            // Sélectionner le formulaire existant
+            let form = document.querySelector('div');
+
+            if(Array.isArray(question[i][0])) {
+                let p = document.createElement('p');
+                p.textContent = question[i][0][1];
+                form.appendChild(p);
+                let img = document.createElement('img');
+                img.id = 'ques';
+                img.src = question[i][0][0];
+                form.appendChild(img);
+            } else {
+                let p = document.createElement('p');
+                p.textContent = question[i][0];
+                form.appendChild(p);
+            }
+
+            for (let j = 0; j < question[i][1].length; j++) {
+                if(Array.isArray(question[i][1][j])) {
+                    let img = document.createElement('img');
+                    img.id = 'rep';
+                    img.src = question[i][1][j][0];
+                    form.appendChild(img);
+                    form.appendChild(document.createElement('br'));
+                    let input = document.createElement('input');
+                    input.type = 'radio';
+                    input.id = question[i][1][j][1].toLowerCase();
+                    input.name = 'question'+i;
+                    input.value = question[i][1][j][1];
+
+                    let label = document.createElement('label');
+                    label.htmlFor = question[i][1][j][1].toLowerCase();
+                    label.textContent = question[i][1][j][1];
+
+                    form.appendChild(input);
+                    form.appendChild(label);
+                    form.appendChild(document.createElement('br'));
+
+                }
+                else {
+                    let input = document.createElement('input');
+                    input.type = 'radio';
+                    input.id = question[i][1][j].toLowerCase();
+                    input.name = 'question'+i;
+                    input.value = question[i][1][j];
+
+                    let label = document.createElement('label');
+                    label.htmlFor = question[i][1][j].toLowerCase();
+                    label.textContent = question[i][1][j];
+
+                    form.appendChild(input);
+                    form.appendChild(label);
+                    form.appendChild(document.createElement('br'));
+                }
+            }
+            
+        }   
+        
+
+        
+        let score1 = 0;
+        let score2 = 0;
+
+        // Parcourir chaque question
+        function calculateScore() {
+            for (let i = 0; i < question.length; i++) {
+                // Obtenir les boutons radio pour cette question
+                let radios = document.getElementsByName('question' + i);
+                // Parcourir chaque bouton radio
+                for (let j = 0; j < radios.length; j++) {
+                    let radio = radios[j];
+                    // Si ce bouton radio est coché et sa valeur est la bonne réponse
+                    if (radio.checked && radio.value === question[i][2] || radio.checked && radio.value === question[i][2][1]) {
+                        // Augmenter le score
+                        if (question[i][3] === 'p1') {
+                            score1++;
+                        } else if (question[i][3] === 'p2') {
+                            score2++;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        
+
+        //pour la correction
+        //note uniquement
+        
+        function next() {
+            event.preventDefault();
+            let allAnswered = true;
+            localStorage.getItem('answers') ? answers = JSON.parse(localStorage.getItem('answers')) : answers = [];
+            for (let i = 0; i < question.length; i++) {
+                let radios = document.getElementsByName('question' + i);
+                let answered = false;
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        answered = true;
+                        break;
+                    }
+                }
+                if (!answered) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            if (!allAnswered) {
+                alert('请回答所有问题');
+            } else {
+                calculateScore();
+                let existe = localStorage.getItem('score3');
+                //enregister les donne ici : temps + reponse
+                if (existe) {
+                    //rien
+                } else {
+                    const time2 = new Date().getTime();
+                    nvEl = {
+                      time: time2,
+                      page: window.location.pathname
+                    };
+                    let navigation = JSON.parse(localStorage.getItem("navigation"));
+                    navigation.push(nvEl);
+                    localStorage.setItem("navigation", JSON.stringify(navigation));
+                    localStorage.setItem('score3', score1);
+                    localStorage.setItem('score4', score2);
+                }
+            window.location.href = "../transition/transition5.html";
+            }
+        }
+
+        
+        
+    </script>
+    
+</body>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ques</title>
+    <link rel="stylesheet" type="text/css" href="../../style/questionnaire.css">
+</head>
+<body>
+
+    <form>
+        <div class="consigne">
+            选择数字回答问题。如果你认为该描述非常符合你的情况，请选择 5 （完全符合我的情况）；
+            <br>
+            如果你认为该描述与你完全不相符，请选择 0 （完全不符合我的情况）。
+            <br>
+            如果该描述或多或少符合你的情况，请选择 0 到 5 之间最能描述你的数字。
+            <br>
+            <br>
+        </div>
+        <table>
+            <thead>
+                <th></th>
+                <th>完全不符合我的情况<br>0</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>完全符合我的情况<br>5</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <br>
+        <button type="submit" onclick="next()">下一页</button>
+    </form>
+
+
+
+    <script>
+      if (localStorage.getItem("cle") === "code de session"){
+          const time = new Date().getTime();
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));
+          navigation.push(nvEl);
+          localStorage.setItem("navigation", JSON.stringify(navigation));
+      } else {
+          window.location.href = "../transition/transition1.html";
+      }
+
+        //A completer
+            let question = [
+            ['在学习这门电力课程中，我常常因为在想其他事情而错过重要的内容。','h1'],
+            ['在学习这门电力课程时，我向自己提出了一些问题来帮助我集中学习。','h2'],
+            ['当我不太理解这门电力课程中的某些内容时，我有重新阅读该内容并试图将其弄懂。','h3'],
+            ['当这门电学课程的内容难以理解时，我有改变我的阅读该内容的方式。','h4'],
+            ['在我学习这门电力课程之前，我有先浏览了一下它的课程结构安排。','h5'],
+            ['在学习这门电力课程时，我有向自己提出一些问题，以确保我理解了学习的内容。','h6'],
+            ['我有尝试改变我的学习方式，以适应这门电力课程的要求和线上学习模式。','h7'],
+            ['我阅读了这门电力课程的内容，但不知道它在讲什么。','h8'],
+            ['在学习这门电学课程时，我有尝试思考并决定我应该从中学到知识，而不是只是阅读它。','h9'],
+            ['在学习这门电学课程时，我有尝试找出哪些概念是我不太理解的。','h10'],
+            ['当我学习这门电力课程时，我为自己设定了目标来帮助我规划我的学习过程。','h11'],
+            ['当我不太理解这门电学课程的一些内容时，我打算稍后弄懂它。','h12']    
+        ];
+        
+        //jusqu'a ici
+
+        //randomisation
+        Array.prototype.shuffle = function() {
+            var currentIndex = this.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = this[currentIndex];
+                this[currentIndex] = this[randomIndex];
+                this[randomIndex] = temporaryValue;
+            }
+            return this;
+        };
+
+        question = question.shuffle();
+
+        for (i = 0; i < question.length; i++) {
+            let table = document.querySelector('tbody');
+            let tr = document.createElement('tr');
+            let tdQuestion = document.createElement('td');
+            tdQuestion.textContent = question[i][0];
+            tr.appendChild(tdQuestion);
+            for (let j = 0; j < 6; j++) {
+                let tdRadio = document.createElement('td');
+                let input = document.createElement('input');
+                input.type = "radio";
+                input.name = question[i][1];
+                input.id = `${j}`;
+                tdRadio.appendChild(input);
+                tr.appendChild(tdRadio);
+            }
+            table.appendChild(tr);
+        }   
+        
+
+    
+
+        
+
+        //pour la correction
+        //note uniquement
+        
+        function next() {
+            event.preventDefault();
+            let allAnswered = true;
+            localStorage.getItem('answers') ? answers = JSON.parse(localStorage.getItem('answers')) : answers = [];
+            for (let i = 0; i < question.length; i++) {
+                let radios = document.getElementsByName(question[i][1]);
+                let answered = false;
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        answered = true;
+                        answers.push([question[i][1],radio.id]);
+                        break;
+                    }
+                }
+                if (!answered) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            if (!allAnswered) {
+                alert("请回答所有问题");
+            } else {
+                localStorage.setItem('answers', JSON.stringify(answers));
+                window.location.href = "ques3.html";
+            }
+        }
+    </script>
+    
+</body>

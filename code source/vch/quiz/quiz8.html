@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" type="text/css" href="../../style/quiz.css">
+</head>
+<body>
+
+
+    <h1 id="question"></h1>
+
+    <form id='questionnaire' onsubmit="correction(event)">
+        <span id="q1"></span>
+        <br>
+        <span id="q2"></span>
+        <br>
+        <span id="q3"></span>
+        <br>
+        <span id="q4"></span>
+        <br>
+        <pre><div id="commentaire"></div></pre>
+        <br>
+        <input type="submit" value="下一页">
+    </form> 
+    <button id="nextButton" type="button" style="display: none;" onclick="next()">下一页</button>
+
+    <script>
+      if (localStorage.getItem("cle") === "code de session"){
+          const time = new Date().getTime();
+          nvEl = {
+              time: time,
+              page: window.location.pathname
+          };
+          let navigation = JSON.parse(localStorage.getItem("navigation"));
+          navigation.push(nvEl);
+          localStorage.setItem("navigation", JSON.stringify(navigation));
+      } else {
+          window.location.href = "../transition/transition1.html";
+      }
+
+        //A completer
+        //
+        //
+        let quizContent = {
+                numero: "quiz7",
+                question: "安装接地极后，如要测量接地电阻值，我使用",
+                reponse: [['A', '万用表。'],
+                ['B', '兆欧表。'],
+                ['C', '伏特表。'],
+                ['D', '接地电阻测试仪。']],
+                correct: "正确!",
+                incorrect: "不正确。正确答案是",
+                essayeEncore: "不正确。再试一次!",
+                explicationA: "不正确。万用表可用来测量电路中的原件或连接器的电阻，及材料或器件的电阻性质等。万用表具有不同的测量范围和精度，对于较低的接地电阻值可能不够灵敏和准确。",
+                explicationB: "不正确。兆欧表或绝缘电阻测试仪（俗称为“高阻表”）是用于测量绝缘体电阻的一种特殊类型的欧姆计。",
+                explicationC: "不正确。伏特计设计用于测量电压。",
+                explicationD: "正确！接地电阻测试仪可以测量接地极电阻和土壤电阻率。",
+                bonneReponse: ['D', //numero A B C ou D
+                "接地电阻测试仪。", //le text de la bonne reponse
+                "正确！接地电阻测试仪可以测量接地极电阻和土壤电阻率。"], //explication quand on coche la bonne reponse, en duplicat avec l'explicationC
+                explicationfin: ["\u000A 正确答案是" + //reponse fausse
+                "\u0022 接地电阻测试仪。 \u0022\u000A"+ //on cite la reponse juste
+                "接地电阻测试仪可以测量接地极电阻和土壤电阻率。", //explication
+                "再试一次!"],
+                prochainCours: "../cours/cours6/content"
+            };
+        // jusqu ici ;
+        //
+        //
+
+
+        //on affiche la question
+        let questionDiv = document.getElementById('question');
+        questionDiv.innerHTML = quizContent.question;
+
+        //la on randomise les reponses
+        let q1=document.getElementById('q1');
+        let q2=document.getElementById('q2');
+        let q3=document.getElementById('q3');
+        let q4=document.getElementById('q4');
+        let commentaire = document.getElementById('commentaire');
+
+        function randomisation(array) {
+            let tableauRandomise = [...array];
+            for (let i = tableauRandomise.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [tableauRandomise[i], tableauRandomise[j]] = [tableauRandomise[j], tableauRandomise[i]];
+            }
+            return tableauRandomise;
+        }
+    
+        let reponsesRandomisees = randomisation(quizContent.reponse);
+
+        q1.innerHTML='<label id='+reponsesRandomisees[0][0]+'><input type="radio" name="question1" id='+reponsesRandomisees[0][0]+' /> ' + reponsesRandomisees[0][1] + '</label>';
+        q2.innerHTML='<label id='+reponsesRandomisees[1][0]+'><input type="radio" name="question1" id='+reponsesRandomisees[1][0]+' /> ' + reponsesRandomisees[1][1] + '</label>';
+        q3.innerHTML='<label id='+reponsesRandomisees[2][0]+'><input type="radio" name="question1" id='+reponsesRandomisees[2][0]+' /> ' + reponsesRandomisees[2][1] + '</label>';
+        q4.innerHTML='<label id='+reponsesRandomisees[3][0]+'><input type="radio" name="question1" id='+reponsesRandomisees[3][0]+' /> ' + reponsesRandomisees[3][1] + '</label>';
+        
+
+        let button = document.querySelector('input[type="submit"]');
+        button.disabled = true;
+        let options = document.querySelectorAll('input[type="radio"]');
+        options.forEach(option => {
+            option.addEventListener('change', () => {
+                button.disabled = false;
+            });
+        });
+        
+
+        //pour la correction
+        const time = new Date().getTime();
+        let list_answers = [];
+        let groupe = localStorage.getItem('groupe');
+        console.log(groupe);
+        function correction(event){
+            event.preventDefault();
+            commentaire.innerHTML = 'je passe ici';
+            if(groupe === "KCR"){
+                commentaire.textContent = 'je passe la';
+                correctionKCR(event);
+            }else if(groupe === "AUC"){
+                correctionAUC(event);
+            }else if(groupe === "EFE"){
+                commentaire.innerHTML = 'je passe la';
+                correctionEFE(event);
+            }else {
+                correctionAUCEFE(event);
+            }
+        }
+
+        function correctionKCR(event){
+            event.preventDefault();
+            
+            let selectedOption = questionnaire.querySelector('input[name="question1"]:checked');
+            console.log(selectedOption);
+            
+            if (selectedOption && selectedOption.id === quizContent.bonneReponse[0]) {
+                commentaire.textContent = quizContent.correct;
+            } else {
+                commentaire.textContent = quizContent.incorrect+' \u0022'+ quizContent.bonneReponse[1]+'\u0022';
+            }
+            list_answers.push(selectedOption.id);
+            document.querySelector('input[type="submit"]').style.display = 'none';
+            document.getElementById('nextButton').style.display = 'block';
+        }
+
+        function correctionAUC(event){
+            event.preventDefault();
+            
+            let selectedOption = questionnaire.querySelector('input[name="question1"]:checked');
+            
+            if (selectedOption && selectedOption.id === quizContent.bonneReponse[0]) {
+                commentaire.textContent = quizContent.correct;
+                document.querySelector('input[type="submit"]').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'block';
+            } else {
+                button.disabled = true;
+                commentaire.textContent = quizContent.essayeEncore;
+                selectedOption.checked = false;
+                selectedOption.disabled = true;
+                document.querySelector('label#'+selectedOption.id).style.textDecoration = 'line-through';
+            }
+            list_answers.push(selectedOption.id);
+        }
+
+        function correctionEFE(event){
+            event.preventDefault();
+            
+            let selectedOption = questionnaire.querySelector('input[name="question1"]:checked');
+            if (selectedOption && selectedOption.id === quizContent.bonneReponse[0]) {
+                commentaire.textContent = quizContent.bonneReponse[2];
+            } else {
+                if (selectedOption && selectedOption.id === 'A') {
+                    commentaire.textContent = quizContent.explicationA + quizContent.explicationfin[0];
+                } else if (selectedOption && selectedOption.id === 'B') {
+                    commentaire.textContent = quizContent.explicationB +quizContent.explicationfin[0];
+                } else if (selectedOption && selectedOption.id === 'C') {
+                    commentaire.textContent = quizContent.explicationC +quizContent.explicationfin[0];
+                } else {
+                    commentaire.textContent = quizContent.explicationD  + quizContent.explicationfin[0];
+                }
+            }
+            list_answers.push(selectedOption.id);
+            document.querySelector('input[type="submit"]').style.display = 'none';
+            document.getElementById('nextButton').style.display = 'block';
+        }
+
+        function correctionAUCEFE(event){
+            event.preventDefault();
+            
+            let selectedOption = questionnaire.querySelector('input[name="question1"]:checked');
+            
+            if (selectedOption && selectedOption.id === quizContent.bonneReponse[0]) {
+                commentaire.textContent = quizContent.bonneReponse[2];
+                list_answers.push(selectedOption.id);
+                document.querySelector('input[type="submit"]').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'block';
+            } else {
+                button.disabled = true;
+                if (selectedOption && selectedOption.id === 'A') {
+                    commentaire.textContent = quizContent.explicationA+ quizContent.explicationfin[1];
+                } else if (selectedOption && selectedOption.id === 'B') {
+                    commentaire.textContent = quizContent.explicationB + quizContent.explicationfin[1];
+                } else if (selectedOption && selectedOption.id === 'C') {
+                    commentaire.textContent = quizContent.explicationC + quizContent.explicationfin[1];
+                } else {
+                    commentaire.innerText = quizContent.explicationD + quizContent.explicationfin[1];
+                }
+                selectedOption.checked = false;
+                selectedOption.disabled = true;
+                document.querySelector('label#'+selectedOption.id).style.textDecoration = 'line-through';
+                list_answers.push(selectedOption.id);
+            }
+        }
+
+        function next() {
+            event.preventDefault();
+            let existe = localStorage.getItem(quizContent.numero);
+            if (existe) {
+                //rien
+            } else {
+                localStorage.setItem(quizContent.numero, JSON.stringify({answers: list_answers}));
+            }
+            window.location.href = quizContent.prochainCours;
+        }
+        
+        
+    </script>
+    
+</body>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition</title>
+    <link rel="stylesheet" type="text/css" href="../../style/transition.css">
+</head>
+<body>
+    <header>
+        <img id="haut" src="../../style/image/haut.png">
+        <img id="bas" src="../../style/image/bas.png">
+    </header>
+</body>
+    <h1>你已经学完了住宅接地保护的相关课程，
+        你对这个课程的设计还满意吗，
+        请回答以下问题来帮助我们将来的课程设计！                   
+    </h1>
+    <button onclick="window.location.href = '../questionnaire/ques2.html';">开始</button>
+    <script>
+      if (localStorage.getItem("cle") === "code de session"){
+         
+      } else {
+          window.location.href = "../transition/transition1.html";
+      }
+    </script>
+</html>

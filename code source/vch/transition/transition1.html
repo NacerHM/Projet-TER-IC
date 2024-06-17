@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition</title>
+    <link rel="stylesheet" type="text/css" href="../../style/transition.css">
+</head>
+<body>
+    <header>
+        <img id="haut" src="../../style/image/haut.png">
+        <img id="bas" src="../../style/image/bas.png">
+    </header>
+</body>
+    <h1 id="t1">感谢你来参加我们的数字课程测试，
+        请认真学习课程并回答相关问题！        
+    </h1>
+
+    <form id="f1">
+        <input type="checkbox" id="certify" name="certify">
+        <label for="certify"> 我确认已了解本次课程测试的相关信息，并同意参与此匿名测试。 </label>
+    </form>
+    <form>
+        <label for="code"> 输入验证码 &nbsp;</label>
+        <input type="text" id="code" name="code">
+        <button type="submit" onclick="myFunction()">开始</button>
+    </form>
+    <script>
+        function myFunction() {
+            event.preventDefault();
+            let certify = document.getElementById("certify").checked;
+            if (!certify) {
+                alert("请勾选 \u0022我确认已了解本次课程测试的相关信息，并同意参与此匿名测试。\u0022");
+                return;
+            }
+            let input = document.getElementById("code").value;
+            if (input === "China") {
+                let groupe = Math.floor(Math.random() * 4) + 1;
+                if(groupe === 1)
+                    groupe = "KCR";
+                else if(groupe === 2)
+                    groupe = "AUC";
+                else if(groupe === 3)
+                    groupe = "EFE";
+                else
+                    groupe = "AUCEFE";
+                localStorage.setItem("cle", "code de session");
+                localStorage.setItem("groupe", groupe);
+                localStorage.setItem("navigation", JSON.stringify([]));
+                
+                window.location.href = "transition2.html";
+
+            } else {
+                alert("验证码错误，请重新填写");
+            }
+        }
+    </script>
+</html>		
